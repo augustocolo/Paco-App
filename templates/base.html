@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <!doctype html>
+        <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <title>Paco</title>
+            <meta name="description" content="">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- https://flask-assets.readthedocs.io/en/latest/#using-the-bundles -->
+
+        {% assets "scss_all" %}
+            <link rel=stylesheet type=text/css href="{{ ASSET_URL }}">
+        {% endassets %}
+
+    </head>
+
+    {% block body %}
+    {% endblock %}
+
+ {% assets "js_all" %}
+            <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+        {% endassets %}
+</html>
