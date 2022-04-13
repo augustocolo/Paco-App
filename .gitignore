@@ -128,8 +128,8 @@ pip-selfcheck.json
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,venv
 
 # Node modules
-static/assets/node_modules
-static/.webassets-cache
+paco/static/assets/node_modules
+paco/static/.webassets-cache
 
 # Pycache
 __pycache__

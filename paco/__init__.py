@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask
 from flask_assets import Bundle, Environment
 from flask_sqlalchemy import SQLAlchemy
 
@@ -32,14 +32,5 @@ scss = Bundle(
 assets.register("scss_all", scss)  # 4. register the generated css file, to be used in Jinja templates (see base.html)
 
 
-@app.route('/')
-def index():
-    return render_template("landing_user.html")
+from paco import routes
 
-@app.route('/login')
-def login(methods=["GET"]):
-    return render_template("login.html")
-
-
-if __name__ == '__main__':
-    app.run()
