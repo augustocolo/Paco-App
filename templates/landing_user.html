@@ -1,58 +1,11 @@
-{% extends "base.html" %}
+{% extends "base_landing.html" %}
 
-{% block body %}
+{% block content %}
  <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <!--
-            NAVBAR
-        -->
-        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white border-bottom">
-            <div class="container-fluid px-5">
-              <a class="navbar-brand" href="#">
-                <img src="{{ url_for('static', filename='images/brand_identity/logo_whole.png') }}" alt="" height="30" class="d-inline-block align-text-top">
-              </a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto fs-6">
-                  <li class="nav-item active mt-4 mb-2 my-md-auto me-1 ">
-                    <a class="nav-link" href="#">
-                      About us</a>
-                  </li>
-                  <li class="nav-item active me-1">
-                    <a class="nav-link" href="#">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" fill="currentColor" class="bi bi-envelope me-1" viewBox="0 0 16 16">
-                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
-                      </svg>
-                      Send</a>
-                  </li>
-                  <li class="nav-item me-3">
-                    <a class="nav-link" href="#">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" fill="currentColor" class="bi bi-box me-1" viewBox="0 0 16 16">
-                        <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5 8.186 1.113zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
-                      </svg>
-                      Drive</a>
-                  </li>
-                  <li class="nav-item">
-                    <div class="dropdown">
-                      <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3R5bGU9ImJhY2tncm91bmQ6I2RkZCI+PHBhdGggZmlsbD0iI0RERCIgZD0iTTAgMGg0OHY0OEgweiIvPjxwYXRoIGQ9Ik0yNCAyOWMyLjM3IDAgNS4yNC4yNDggNy42MTEuNzQ1IDMuODk5LjU0NCA2LjU4IDMuMTQzIDcuNzQgNy4wNzNDMzUuNjg1IDQxLjIwOCAzMC4xNjkgNDQgMjQgNDRjLTYuMTggMC0xMS43MDYtMi44MDMtMTUuMzc1LTcuMjA4IDEuMTA2LTMuNzk0IDMuNjgtNi4yMzcgNy43NjQtNy4wNDdDMTguNzU5IDI5LjI0OCAyMS42MjkgMjkgMjQgMjl6bTAtMjFhOCA4IDAgMDE4IDh2MmE4IDggMCAxMS0xNiAwdi0yYTggOCAwIDAxOC04eiIgZmlsbD0iI0ZGRiIvPjwvc3ZnPg==" alt="" class="rounded-circle">
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="login.html">Login</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Sign Up</a></li>
-                      </ul>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
 
           <div class="container col-xxl-8 px-4 py-5 mt-4">
             <!--Hero-->
@@ -203,47 +156,6 @@
             </div>
           </div>
 
-          <!--Footer-->
-          <footer class="container col-xxl-8 px-4 py-4 border-top">
-            <div class="row">
-              <div class="col-12">
-                <img class="mb-2" src="{{ url_for('static', filename='images/brand_identity/logo.png') }}" alt="" width="24" height="24">
-              </div>
-              <div class="col-12 col-md-4 col-sm-6">
-                <h5>Contact Info</h5>
-                <ul class="list-unstyled text-small">
-                  <li class="text-muted">Corso Duca degli Abruzzi, 24 </li>
-                  <li class="text-muted">10129 Torino, Italy</li>
-                  <li class="text-muted"><a class="text-muted" href="mailto:info@pacodelivery.com">info@pacodelivery.com</a></li>
-                  <li class="text-muted"><a class="text-muted" href="tel:+390114476139">+39 0114476139</a></li>
-                </ul>
-              </div>
-              <div class="col-12 col-md-4 col-sm-6">
-                <h5>About us</h5>
-                <ul class="list-unstyled text-small">
-                  <li><a class="text-muted" href="#">How it works</a></li>
-                  <li><a class="text-muted" href="#">Our vision</a></li>
-                  <li><a class="text-muted" href="#">Locations</a></li>
 
-                </ul>
-              </div>
-              <div class="col-12 col-md-4 col-sm-6">
-                <h5>Resources</h5>
-                <ul class="list-unstyled text-small">
-                  <li><a class="text-muted" href="#">Send a parcel</a></li>
-                  <li><a class="text-muted" href="#">Drive your car</a></li>
-                  <li><a class="text-muted" href="#">Login</a></li>
-                  <li><a class="text-muted" href="#">Sign up</a></li>
-                </ul>
-              </div>
-
-              <div class="col-12 col-md">
-                <small class="d-block mb-3 text-muted">Paco Delivery &copy; 2022 - Made in Torino with &#10084;</small>
-            </div>
-            </div>
-
-          </footer>
-
-          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    </body>
+  </body>
 {% endblock %}

@@ -1,7 +1,13 @@
 from flask import Flask, request, render_template
 from flask_assets import Bundle, Environment
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+# Configure database
+app.config['SECRET_KEY'] = 'Cambiarelasecretkeynonappenapubblico'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///paco.db'
+db = SQLAlchemy(app)
 
 # Create assets environment
 assets = Environment(app)
@@ -10,8 +16,8 @@ assets.url = app.static_url_path
 # Bundle JS files
 js = Bundle(
     "assets/node_modules/jquery/dist/jquery.min.js",
-    "assets/node_modules/@popperjs/core/dist/umd/popper.min.js",
-    "assets/node_modules/bootstrap/dist/js/bootstrap.min.js",
+    "assets/node_modules/@popperjs/core/dist/umd/popper.js",
+    "assets/node_modules/bootstrap/dist/js/bootstrap.js",
     filters="jsmin",
     output="js/generated.js"
 )
@@ -29,6 +35,10 @@ assets.register("scss_all", scss)  # 4. register the generated css file, to be u
 @app.route('/')
 def index():
     return render_template("landing_user.html")
+
+@app.route('/login')
+def login(methods=["GET"]):
+    return render_template("login.html")
 
 
 if __name__ == '__main__':
