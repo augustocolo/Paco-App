@@ -1,161 +1,160 @@
-{% extends "base_landing.html" %}
+{% extends "base/base_landing.html" %}
 
 {% block content %}
- <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+    <body>
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
 
-          <div class="container col-xxl-8 px-4 py-5 mt-4">
-            <!--Hero-->
-            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-              <div class="col-8 col-lg-6 mx-auto">
+    <div class="container col-xxl-8 px-4 py-5 mt-4">
+        <!--Hero-->
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+            <div class="col-8 col-lg-6 mx-auto">
                 <img src="{{ url_for('static', filename='images/corporate_memphis/undraw_deliveries_2r4y.svg') }}" class="d-block mx-lg-auto img-fluid" alt="Deliveries" loading="lazy">
-              </div>
-              <div class="col-lg-6">
+            </div>
+            <div class="col-lg-6">
                 <h1 class="display-5 fw-bold lh-1 mb-3">The <b>fastest</b> and <b>cheapest</b> way to send a parcel to your friends</h1>
                 <!-- <p class="lead">Try it out now</p> -->
-                <form class="p-1 p-md-1 form-floating">
-                  <div class="form-floating">
-                    <input class="form-control form-control-lg mb-3 rounded-pill px-4" type="text" placeholder="You want to send it from..." list="datalistOptions" aria-label="default input example" id="startFrom">
-                    <label for="startFrom" class="px-4">You want to send it from...</label>
-                  </div>
-                  <div class="form-floating">
-                    <input class="form-control form-control-lg mb-3 rounded-pill px-4" type="text" placeholder="You want it to arrive in..." list="datalistOptions" aria-label="default input example" id="arriveTo">
-                    <label for="arriveTo" class="px-4">You want it to arrive in...</label>
-                  </div>
-                  <datalist id="datalistOptions">
-                    <option value="Torino">
-                    <option value="Genova">
-                    <option value="Asti">
-                    <option value="Cuneo">
-                    <option value="Milano">
-                  </datalist>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="input-group mb-3 form-floating">
-                        <input type="text" class="form-control form-control-lg rounded-pill px-4" placeholder="Weight" aria-label="Weight" aria-describedby="basic-addon2" style="border-top-right-radius:0px!important; border-bottom-right-radius:0px!important;" id="weight">
-                        <span class="input-group-text rounded-pill" id="basic-addon2" style="border-top-left-radius:0px!important; border-bottom-left-radius:0px!important;">kg</span>
-                        <label for="weight" class="px-4">Weight</label>
-                      </div>
+                <form class="p-1 p-md-1 form-floating"
+                        {% if current_user.is_authenticated and current_user.email_confirmed %}
+                      method="POST"
+                        {% else %}
+                      method="GET"
+                        {% endif %}
+                      action="{{ url_for('create_delivery') }}">
+                    {{ form.hidden_tag() }}
+                    <div class="form-floating">
+                        {{ form.send_from(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="You want to send it from...", list="datalistOptions") }}
+                        {{ form.send_from.label(class="px-4") }}
                     </div>
-                    <div class="col-md-6">
-                      <div class="mb-3 form-floating">
-                        <select class="form-select form-select-lg rounded-pill pt-1" id="floatingSelectGrid" aria-label="Floating label select example">
-                          <option selected disabled hidden>Box Size</option>
-                          <option value="1">Small</option>
-                          <option value="2">Medium</option>
-                          <option value="3">Large</option>
-                        </select>
-                      </div>
+                    <div class="form-floating">
+                        {{ form.send_to(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="You want it to arrive in...", list="datalistOptions") }}
+                        {{ form.send_to.label(class="px-4") }}
                     </div>
-                  </div>
-                  <button class="w-100 btn btn-lg btn-primary rounded-pill" type="submit">Send it now</button>
-
+                    <datalist id="datalistOptions">
+                        {% for town in towns %}
+                            <option value="{{ town }}">
+                        {% endfor %}
+                    </datalist>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group mb-3 form-floating">
+                                {{ form.weight(class="form-control form-control-lg rounded-pill px-4", placeholder="Weight", style="border-top-right-radius:0px!important; border-bottom-right-radius:0px!important;") }}
+                                <span class="input-group-text rounded-pill" id="basic-addon2" style="border-top-left-radius:0px!important; border-bottom-left-radius:0px!important;">kg</span>
+                                {{ form.weight.label(class="px-4") }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 form-floating">
+                                {{ form.box_size(class="form-select form-select-lg rounded-pill pt-1", placeholder="Box size") }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form.submit(class="w-100 btn btn-lg btn-primary rounded-pill") }}
                 </form>
-              </div>
             </div>
+        </div>
 
-            <!-- Value Proposition -->
-            <div class="row flex g-md-4 g-2 pt-3 border-top">
-              <div class="col col-md-4 col-12 ">
+        <!-- Value Proposition -->
+        <div class="row flex g-md-4 g-2 pt-3 border-top">
+            <div class="col col-md-4 col-12 ">
                 <svg xmlns="http://www.w3.org/2000/svg" height="40" fill="#0F2043" class="bi bi-cash mb-3" viewBox="0 0 16 16">
-                  <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-                  <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/>
+                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/>
                 </svg>
                 <h5>Send your parcels where you want at a low cost
                 </h5>
                 <p>You can choose among different lockers in which you can drop off and collect the parcels
                 </p>
-              </div>
-              <div class="col col-md-4 col-12">
+            </div>
+            <div class="col col-md-4 col-12">
                 <svg xmlns="http://www.w3.org/2000/svg" height="40" fill="#77DD76" class="bi bi-tree mb-3" viewBox="0 0 16 16">
-                  <path d="M8.416.223a.5.5 0 0 0-.832 0l-3 4.5A.5.5 0 0 0 5 5.5h.098L3.076 8.735A.5.5 0 0 0 3.5 9.5h.191l-1.638 3.276a.5.5 0 0 0 .447.724H7V16h2v-2.5h4.5a.5.5 0 0 0 .447-.724L12.31 9.5h.191a.5.5 0 0 0 .424-.765L10.902 5.5H11a.5.5 0 0 0 .416-.777l-3-4.5zM6.437 4.758A.5.5 0 0 0 6 4.5h-.066L8 1.401 10.066 4.5H10a.5.5 0 0 0-.424.765L11.598 8.5H11.5a.5.5 0 0 0-.447.724L12.69 12.5H3.309l1.638-3.276A.5.5 0 0 0 4.5 8.5h-.098l2.022-3.235a.5.5 0 0 0 .013-.507z"/>
+                    <path d="M8.416.223a.5.5 0 0 0-.832 0l-3 4.5A.5.5 0 0 0 5 5.5h.098L3.076 8.735A.5.5 0 0 0 3.5 9.5h.191l-1.638 3.276a.5.5 0 0 0 .447.724H7V16h2v-2.5h4.5a.5.5 0 0 0 .447-.724L12.31 9.5h.191a.5.5 0 0 0 .424-.765L10.902 5.5H11a.5.5 0 0 0 .416-.777l-3-4.5zM6.437 4.758A.5.5 0 0 0 6 4.5h-.066L8 1.401 10.066 4.5H10a.5.5 0 0 0-.424.765L11.598 8.5H11.5a.5.5 0 0 0-.447.724L12.69 12.5H3.309l1.638-3.276A.5.5 0 0 0 4.5 8.5h-.098l2.022-3.235a.5.5 0 0 0 .013-.507z"/>
                 </svg>
                 <h5>
-                  Make a sustainable choice
+                    Make a sustainable choice
                 </h5>
                 <p>
-                  Reduce CO2 emissions related to parcel delivery.
-                  Have a look at our sustainability commitment to see more
+                    Reduce CO2 emissions related to parcel delivery.
+                    Have a look at our sustainability commitment to see more
                 </p>
-              </div>
-              <div class="col col-md-4 col-12">
+            </div>
+            <div class="col col-md-4 col-12">
                 <svg xmlns="http://www.w3.org/2000/svg" height="40" fill="#0F2043" class="bi bi-phone-flip mb-3" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M11 1H5a1 1 0 0 0-1 1v6a.5.5 0 0 1-1 0V2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v6a.5.5 0 0 1-1 0V2a1 1 0 0 0-1-1Zm1 13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a.5.5 0 0 0-1 0v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2a.5.5 0 0 0-1 0v2ZM1.713 7.954a.5.5 0 1 0-.419-.908c-.347.16-.654.348-.882.57C.184 7.842 0 8.139 0 8.5c0 .546.408.94.823 1.201.44.278 1.043.51 1.745.696C3.978 10.773 5.898 11 8 11c.099 0 .197 0 .294-.002l-1.148 1.148a.5.5 0 0 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2a.5.5 0 1 0-.708.708l1.145 1.144L8 10c-2.04 0-3.87-.221-5.174-.569-.656-.175-1.151-.374-1.47-.575C1.012 8.639 1 8.506 1 8.5c0-.003 0-.059.112-.17.115-.112.31-.242.6-.376Zm12.993-.908a.5.5 0 0 0-.419.908c.292.134.486.264.6.377.113.11.113.166.113.169 0 .003 0 .065-.13.187-.132.122-.352.26-.677.4-.645.28-1.596.523-2.763.687a.5.5 0 0 0 .14.99c1.212-.17 2.26-.43 3.02-.758.38-.164.713-.357.96-.587.246-.229.45-.537.45-.919 0-.362-.184-.66-.412-.883-.228-.223-.535-.411-.882-.571ZM7.5 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1Z"/>
+                    <path fill-rule="evenodd" d="M11 1H5a1 1 0 0 0-1 1v6a.5.5 0 0 1-1 0V2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v6a.5.5 0 0 1-1 0V2a1 1 0 0 0-1-1Zm1 13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a.5.5 0 0 0-1 0v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2a.5.5 0 0 0-1 0v2ZM1.713 7.954a.5.5 0 1 0-.419-.908c-.347.16-.654.348-.882.57C.184 7.842 0 8.139 0 8.5c0 .546.408.94.823 1.201.44.278 1.043.51 1.745.696C3.978 10.773 5.898 11 8 11c.099 0 .197 0 .294-.002l-1.148 1.148a.5.5 0 0 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2a.5.5 0 1 0-.708.708l1.145 1.144L8 10c-2.04 0-3.87-.221-5.174-.569-.656-.175-1.151-.374-1.47-.575C1.012 8.639 1 8.506 1 8.5c0-.003 0-.059.112-.17.115-.112.31-.242.6-.376Zm12.993-.908a.5.5 0 0 0-.419.908c.292.134.486.264.6.377.113.11.113.166.113.169 0 .003 0 .065-.13.187-.132.122-.352.26-.677.4-.645.28-1.596.523-2.763.687a.5.5 0 0 0 .14.99c1.212-.17 2.26-.43 3.02-.758.38-.164.713-.357.96-.587.246-.229.45-.537.45-.919 0-.362-.184-.66-.412-.883-.228-.223-.535-.411-.882-.571ZM7.5 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1Z"/>
                 </svg>
                 <h5>Scroll, click, tap, send and track
                 </h5>
                 <p>Sending a parcel has never been easier!  Thanks to our easy to use app, your next delivery is just a couple of minutes away! And tracking is available to you real time!
                 </p>
-              </div>
             </div>
+        </div>
 
-            <!-- EXAMPLES -->
-            <div class="row border-top pt-3 mb-3">
-              <h3>Where do you want to ship it?</h3>
-            </div>
+        <!-- EXAMPLES -->
+        <div class="row border-top pt-3 mb-3">
+            <h3>Where do you want to ship it?</h3>
+        </div>
 
-            <div class="container">
-              <div class="row">
+        <div class="container">
+            <div class="row">
                 <div class="col col-md-4 col-12 mb-2">
-                  <a href="#" class="btn btn-dark d-block">
-                    <div class="row bg-dark text-light rounded py-4 px-3 h-100">
-                      <div class="col col-6 my-auto text-start">
-                        Torino &#8594; Milano
-                      </div>
-                      <div class="col col-6 col-md-4 my-auto text-end">
-                        <span><strong class="h4">14€</strong></span>
-                      </div>
-                      <div class="col col-2 d-none d-md-block my-auto">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                          <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                        </svg>
-                      </div>
-                    </div>
-                  </a>
-                  </div>
-
-                  <div class="col col-md-4 col-12 mb-2">
-                    <a href="#" class="btn btn-dark d-block">
-                      <div class="row bg-dark text-light rounded py-4 px-3 h-100">
-                        <div class="col col-6 my-auto text-start">
-                          Milano &#8594; Bergamo
+                    <a href="#" class="btn btn-dark d-block mb-2">
+                        <div class="row bg-dark text-light rounded py-4 px-3 h-100">
+                            <div class="col col-6 my-auto text-start">
+                                Torino &#8594; Milano
+                            </div>
+                            <div class="col col-6 col-md-4 my-auto text-end">
+                                <span><strong class="h4">14€</strong></span>
+                            </div>
+                            <div class="col col-2 d-none d-md-block my-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                                </svg>
+                            </div>
                         </div>
-                        <div class="col col-6 col-md-4 my-auto text-end">
-                          <span><strong class="h4">6€</strong></span>
-                        </div>
-                        <div class="col col-2 d-none d-md-block my-auto">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                          </svg>
-                        </div>
-                      </div>
                     </a>
-                    </div>
+                </div>
 
-                  <div class="col col-md-4 col-12 mb-2">
-                  <a href="#" class="btn btn-dark d-block">
-                    <div class="row bg-dark text-light rounded py-4 px-3 h-100">
-                      <div class="col col-6 my-auto text-start">
-                        Aosta &#8594; Genova
-                      </div>
-                      <div class="col col-6 col-md-4 my-auto text-end">
-                        <span><strong class="h4">25€</strong></span>
-                      </div>
-                      <div class="col col-2 d-none d-md-block my-auto">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                          <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                        </svg>
-                      </div>
-                    </div>
-                  </a>
-                  </div>
-              </div>
+                <div class="col col-md-4 col-12 mb-2">
+                    <a href="#" class="btn btn-dark d-block">
+                        <div class="row bg-dark text-light rounded py-4 px-3 h-100">
+                            <div class="col col-6 my-auto text-start">
+                                Milano &#8594; Bergamo
+                            </div>
+                            <div class="col col-6 col-md-4 my-auto text-end">
+                                <span><strong class="h4">6€</strong></span>
+                            </div>
+                            <div class="col col-2 d-none d-md-block my-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col col-md-4 col-12 mb-2">
+                    <a href="#" class="btn btn-dark d-block">
+                        <div class="row bg-dark text-light rounded py-4 px-3 h-100">
+                            <div class="col col-6 my-auto text-start">
+                                Aosta &#8594; Genova
+                            </div>
+                            <div class="col col-6 col-md-4 my-auto text-end">
+                                <span><strong class="h4">25€</strong></span>
+                            </div>
+                            <div class="col col-2 d-none d-md-block my-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
-          </div>
+        </div>
+    </div>
 
 
-  </body>
+    </body>
 {% endblock %}

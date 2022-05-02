@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+
+{% block body %}
+    <!-- NAVBAR FOR LANDING -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white border-bottom">
+        <div class="container-fluid px-5">
+            <a class="navbar-brand" href="/">
+                <img src="{{ url_for('static', filename='images/brand_identity/logo_whole.png') }}" alt="" height="30" class="d-inline-block align-text-top">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto fs-6">
+                    <li class="nav-item mt-4 mb-2 my-md-auto me-1 ">
+                        <a class="nav-link btn btn-success text-white rounded-pill px-3" href="{{ url_for('create_delivery') }}">
+                            <i class="bi bi-plus-lg me-1"></i>Send Parcel</a>
+                    </li>
+                    <li class="nav-item my-2 my-md-auto me-1">
+                        <a class="nav-link btn btn-dark text-white rounded-pill px-3" href="#">
+                            Become a driver
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{{ url_for('static', filename='images/default_user_image.svg') }}" alt="" class="rounded-circle">
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                {% if current_user.is_authenticated %}
+                                    <li><div class="dropdown-item-text">Hello <b>{{ current_user.username }}</b></div></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('show_dashboard') }}">Dashboard</a>  </li>
+                                    <li><a class="dropdown-item" href="#">Your account</a>  </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                                {% else %}
+                                    <li><a class="dropdown-item" href="/login">Login</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
+                                {% endif %}
+
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+{% endblock %}

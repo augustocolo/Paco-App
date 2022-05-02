@@ -1,0 +1,21 @@
+{% extends "base/base_landing.html" %}
+
+{% block content %}
+    <div class="container col-xxl-8 px-4 py-5 mt-5">
+        <div class="col-12 col-md-6 mx-auto">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <h4 class="fw-bold lh-1 mb-3">We need your confirmation!</h4>
+            <p>Thanks for signing up to Paco!</p>
+            <p>Before sending or driving we need you to confirm your email!</p>
+            <p>Check your email and confirm your email address!</p>
+        </div>
+    </div>
+{% endblock %}

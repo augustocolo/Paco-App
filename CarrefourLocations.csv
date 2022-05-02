@@ -1,0 +1,56 @@
+Id,Nome,Via,CAP,Città,Provincia,Regione,Latitudine,Longitudine,DataAggiunta
+30,Carrefour Abbiategrasso ,"Viale Serafino Dell'Uomo, 26, 20081 Abbiategrasso MI",20081,Abbiategrasso ,MI,Lombardia,45.39821,8.91678,25/04/2022 22:18
+18,Carrefour Alassio,"VIA G. BOSCO, 36/50 - ALASSIO (SV)",17021,Alassio,IM,Liguria,44.00533327,8.169046613,25/04/2022 22:18
+53,Carrefour Alba,"CORSO PIAVE 94 , 12051, ALBA",12051,Alba,CN,Piemonte,44.69098465,8.020476499,25/04/2022 22:18
+14,Carrefour Aosta Festaz,"Via B. Festaz, 10",11100,Aosta,AO,Valle d'Aosta,45.7410703,7.322982349,25/04/2022 22:18
+15,Carrefour Aosta Grand Chemin,Rue Grand Chemin n.132,11020,Aosta,AO,Valle d'Aosta,45.73970719,7.3524406,25/04/2022 22:18
+38,Carrefour Barzago,"Via xxv Aprile, 1, 23890 Barzago LC",23890,Barzago,LC,Lombardia,45.7514985,9.3241166,25/04/2022 22:18
+37,Carrefour Bergamo,"Via G. Tiraboschi, 53, 24122 Bergamo BG",24122,Bergamo,BG,Lombardia,45.7625257,9.4496897,25/04/2022 22:18
+50,Carrefour Burolo,"VIA LIGURIA N. 1, 10010, BUROLO",10010,Burolo,TO,Piemonte,45.46906014,7.924640872,25/04/2022 22:18
+40,Carrefour Busto Arsizio,"Viale Duca D'Aosta, 19, 21052 Busto Arsizio VA",21052,Busto Arsizio,VA,Lombardia,45.6160657,8.854906,25/04/2022 22:18
+4,Carrefour Châtillon,"Via Emilio Chanoux, 180",11024,Châtillon,AO,Valle d'Aosta,45.75777818,7.621196669,25/04/2022 22:18
+49,Carrefour Chivasso,"VIA GERBIDO 15, 10034, CHIVASSO",10034,Chivasso,TO,Piemonte,45.18554515,7.89173584,25/04/2022 22:18
+42,Carrefour Cittiglio,"Via Provinciale, 10, 21033 Cittiglio VA",21033,Cittiglio,VA,Lombardia,45.8916267,8.6704931,25/04/2022 22:18
+8,Carrefour Cogoleto,P.ZZA DELLA CHIESA ANG. VIA RATI - COGOLETO (GE),16016,Cogoleto,GE,Liguria,44.39005604,8.647186167,25/04/2022 22:18
+46,Carrefour Collegno,"VIA SPAGNA N.10/12, 10093, COLLEGNO",10093,Collegno,TO,Piemonte,45.10097143,7.592231256,25/04/2022 22:18
+39,Carrefour Como,"Viale Giulio Cesare, 13, 22100 Como CO",22100,Como,CO,Lombardia,45.8021869,9.0866277,25/04/2022 22:18
+3,Carrefour Courmayeur,"Strada Larzey - Entrèves, 4",11013,Courmayeur,AO,Valle d'Aosta,45.81936177,6.960324029,25/04/2022 22:18
+54,Carrefour Cuneo,"C.SO IV NOVEMBRE, 19, 12100, CUNEO",12100,Cuneo,CN,Piemonte,44.38925025,7.540949772,25/04/2022 22:18
+19,Carrefour Genova Cecchi,"Via Antonio Cecchi, 77, 16129 Genova GE",16129,Genova,GE,Liguria,44.4040656,8.945499802,25/04/2022 22:18
+20,Carrefour Genova Cesarea,"Via Cesarea, 10/12R, 16121 Genova GE",16121,Genova,GE,Liguria,44.40698638,8.94343467,25/04/2022 22:18
+45,Carrefour Grugliasco,"VIA CREA N. 10, 10095, GRUGLIASCO",10095,Grugliasco,TO,Piemonte,45.05569831,7.613896294,25/04/2022 22:18
+17,Carrefour Imperia,VIA GIANNETTI N. 4 - IMPERIA (IM),18100,Imperia,IM,Liguria,43.88774375,8.032486869,25/04/2022 22:18
+9,Carrefour La Spezia,VIA DI MONALE 69 - LA SPEZIA (SP),19122,La Spezia,SP,Liguria,44.10750792,9.816950844,25/04/2022 22:18
+35,Carrefour Lodi,"Viale Italia, snc, 26900 Lodi LO",26900,Lodi,LO,Lombardia,45.2964432,9.5147248,25/04/2022 22:18
+32,Carrefour Meda,"Via Indipendenza, 20821 Meda MB",20821,Meda,MB,Lombardia,45.6604633,9.1606982,25/04/2022 22:18
+22,Carrefour Milano Monti,Via Vincenzo Monti 55,20153,Milano,MI,Lombardia,45.4718956,9.1676381,25/04/2022 22:18
+23,Carrefour Milano Farini,"Via Carlo Farini, 79/81, 20153 Milano MI",20153,Milano,MI,Lombardia,45.4878993,9.1823252,25/04/2022 22:18
+24,Carrefour Milano Ammiano,"Via Marcellino Ammiano, 14, 20137 Milano MI",20137,Milano,MI,Lombardia,45.4524609,9.2187989,25/04/2022 22:18
+25,Carrefour Milano Soderini,"Via Soderini, Viale S. Gimignano, 48, 20153 Milano MI",20153,Milano,MI,Lombardia,45.4550885,9.1369264,25/04/2022 22:18
+26,Carrefour MIlano San Felice,"Piazza Centro Commerciale, 20090 Milano San Felice MI",20090,Segrate,MI,Lombardia,45.4745339,9.3089784,25/04/2022 22:18
+44,Carrefour Moncalieri,"Corso Savona 69, 10024, MONCALIERI",10024,Moncalieri,TO,Piemonte,44.98373741,7.705990686,25/04/2022 22:18
+31,Carrefour Monza ,"Via A. Boito Ang, Via della Birona, 20900 Monza MB",20900,Monza ,MB,Lombardia,45.5801,9.2725,25/04/2022 22:18
+52,Carrefour Novara,"CORSO GIULIO CESARE, 28100, NOVARA",28100,Novara,NO,Piemonte,45.43516547,8.617630454,25/04/2022 22:18
+33,Carrefour Pavia,"Viale Giacomo Matteotti, 53, 27100 Pavia PV",27100,Pavia,PV,Lombardia,45.1901709,9.1537014,25/04/2022 22:18
+7,Carrefour Pietra Ligure,"Piazza Mons. Prof. Nicolo Palmarini, 4, 17027 Pietra Ligure SV",17027,Pietra Ligure,SV,Liguria,44.17708388,8.276252919,25/04/2022 22:18
+34,Carrefour Pieve Porto Morone,"Via XXIV Maggio, 27017 Pieve Porto Morone PV",27017,Pieve Porto Morone,PV,Lombardia,45.1084329,9.4460245,25/04/2022 22:18
+48,Carrefour Pinerolo,"VIA GIUSTETTO N. 43, 10064, PINEROLO",10064,Pinerolo,TO,Piemonte,44.88386111,7.300677709,25/04/2022 22:18
+43,Carrefour Poggiridenti,"Via Stazione, 1, 23020 Poggiridenti SO",23020,Poggiridenti,SO,Lombardia,46.1662132,9.9307817,25/04/2022 22:18
+12,Carrefour Pollein,"Località Autoporto, 22",11020,Pollein,AO,Valle d'Aosta,45.74085683,7.368862227,25/04/2022 22:18
+5,Carrefour Pont-Saint-Martin,"Via Nazionale, 27, 11026",11026,Pont-Saint-Martin,AO,Valle d'Aosta,45.60317871,7.803237248,25/04/2022 22:18
+21,Carrefour Rapallo,"Via della Libertà, 60, 16035 Rapallo GE",16035,Rapallo,GE,Liguria,44.35578011,9.22696551,25/04/2022 22:18
+28,Carrefour Rho,"Via Pietro Mascagni, 2, 20017 Rho MI",20017,Rho,MI,Lombardia,45.5277559,9.0524685,25/04/2022 22:18
+29,Carrefour Rozzano,"Via XXV Aprile, 31, 20089 Rozzano MI",20089,Rozzano,MI,Lombardia,45.3733262,9.147924,25/04/2022 22:18
+27,Carrefour San Donato Milanese,"Ang. Morandi, SS9, 20097 San Donato Milanese MI",20097,San Donato Milanese,MI,Lombardia,45.41807,9.27165,25/04/2022 22:18
+11,Carrefour Santa Margherita Ligure,"Largo Giovanni Amendola, 5/6, 16038 Santa Margherita Ligure GE",16038,Santa Margherita Ligure,GE,Liguria,44.33830009,9.211195501,25/04/2022 22:18
+6,Carrefour Savona,c.so Vittorio Veneto/via Cimarosa - SAVONA (SV),17100,Savona,SV,Liguria,44.30100853,8.476320292,25/04/2022 22:18
+10,Carrefour Sestri Levante,PIAZZA REPUBBLICA 28 - SESTRI LEVANTE (GE),16039,Sestri Levante,GE,Liguria,44.27271797,9.398504498,25/04/2022 22:18
+13,Carrefour Taggia,"Via del Piano, 18018",18018,Taggia,IM,Liguria,43.89838717,7.849193723,25/04/2022 22:18
+1,Carrefour Torino Montecucco,"Corso Montecucco, 108, 10100 Torino",10100,Torino,TO,Piemonte,45.06630328,7.630811126,25/04/2022 22:18
+2,Carrefour Torino Turati,"Corso Filippo Turati, 75",10134,Torino,TO,Piemonte,45.05116824,7.662552882,25/04/2022 22:18
+47,Carrefour Tortona,"VIA POSTUMIA SNC, 15057, TORTONA",15057,Tortona,AL,Piemonte,44.88328355,8.857069805,25/04/2022 22:18
+41,Carrefour Varese,"Viale Belforte, 21100 Varese VA",21100,Varese,VA,Lombardia,45.8228603,8.8362209,25/04/2022 22:18
+16,Carrefour Ventimiglia,"VIA ROMA, 22/A - VENTIMIGLIA (IM)",18039,Ventimiglia,IM,Liguria,43.79052408,7.609309054,25/04/2022 22:18
+51,Carrefour Vercelli,"VARIANTE SUD N. 13, 13100, VERCELLI",13100,Vercelli,VC,Piemonte,45.32027644,8.395493925,25/04/2022 22:18
+36,Carrefour Verdello,"Via Papa Giovanni XXIII, 5, 24049 Verdello BG",24049,Verdello,BG,Lombardia,45.6037,9.6285,25/04/2022 22:18
+55,Carrefour Villafranca d'Asti,"REGIONE TAVERNE 105/C , 14018, VILLAFRANCA D'ASTI",14018,Villafranca d'Asti,AT,Piemonte,44.91859993,8.024453463,25/04/2022 22:18

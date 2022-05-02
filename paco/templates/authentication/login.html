@@ -1,0 +1,37 @@
+{% extends "base/base_landing.html" %}
+
+{% block content %}
+    <div class="container col-xxl-8 px-4 pt-5 pb-3 mt-5">
+        <div class="col-12 col-md-6 mx-auto">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <h4 class="fw-bold lh-1 mb-3">Login</h4>
+            <form class="p-1 p-md-1 form-floating" method="POST" action="">
+                {{  form.hidden_tag() }}
+                <div class="form-floating">
+                    {{ form.email(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Email") }}
+                    {{ form.email.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.password(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Password") }}
+                    {{ form.password.label(class="px-4") }}
+                </div>
+                <div class="row mb-3 px-3">
+                    <div class="form-check form-switch">
+                        {{ form.remember_me.label(class="form-check-label") }}
+                        {{ form.remember_me(class="form-check-input") }}
+                    </div>
+                </div>
+                {{ form.submit(class="w-100 btn btn-lg btn-primary rounded-pill") }}
+                <p class="mt-3 text-center">You don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

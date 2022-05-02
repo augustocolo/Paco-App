@@ -1,0 +1,68 @@
+{% extends "base/base_dashboard.html" %}
+
+{% block content %}
+    <div class="container px-4 py-5 mt-5">
+        <div class="col-12 col-md-6 mx-auto">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <h4 class="fw-bold lh-1 mb-3">Confirm your delivery</h4>
+            <div class="bg-light rounded px-3 py-2 mb-3">
+                <div class="row py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>From</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ from_town }}</p>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>To</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ to_town }}</p>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>Dimension</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ text_dimension }}</p>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>Weight</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ form.weight.data }} kg</p>
+                    </div>
+                </div>
+            </div>
+            <form class="p-1 p-md-1 mb-3" method="POST" action="{{ url_for('send_locker_choice') }}">
+                <h4 class="fw-bold lh-1 mb-3">Step 1:</h4>
+                <h5>Choose a locker in {{ from_town }}</h5>
+                <div class="mb-3">{{ map_from.html }}</div>
+                {{ map_from.js }}
+                {{ form.locker_source_id(class="btn-group-vertical w-100 mb-3") }}
+
+                <h4>Step 2:</h4>
+                <h5>Choose a locker in {{ to_town }}</h5>
+                <div class="mb-3">{{ map_to.html }}</div>
+                {{ map_to.js }}
+                {{ form.locker_destination_id(class="btn-group-vertical w-100 mb-3") }}
+
+                {{ form.hidden_tag() }}
+                {{ form.submit(class="w-100 btn btn-lg btn-success rounded-pill") }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

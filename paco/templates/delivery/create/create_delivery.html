@@ -1,0 +1,50 @@
+{% extends "base/base_dashboard.html" %}
+
+{% block content %}
+    <div class="container col-xxl-8 px-4 py-5 mt-5">
+        <div class="col-12 col-md-6 mx-auto">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <h4 class="fw-bold lh-1 mb-3">Send a parcel</h4>
+            <form class="p-1 p-md-1 form-floating" method="POST" action="">
+                {{  form.hidden_tag() }}
+                <div class="form-floating">
+                    {{ form.send_from(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="You want to send it from...", list="datalistOptions") }}
+                    {{ form.send_from.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.send_to(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="You want it to arrive in...", list="datalistOptions") }}
+                    {{ form.send_to.label(class="px-4") }}
+                </div>
+                <datalist id="datalistOptions">
+                    {% for town in towns %}
+                        <option value="{{ town }}">
+                    {% endfor %}
+                </datalist>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3 form-floating">
+                            {{ form.weight(class="form-control form-control-lg rounded-pill px-4", placeholder="Weight", style="border-top-right-radius:0px!important; border-bottom-right-radius:0px!important;") }}
+                            <span class="input-group-text rounded-pill" id="basic-addon2" style="border-top-left-radius:0px!important; border-bottom-left-radius:0px!important;">kg</span>
+                            {{ form.weight.label(class="px-4") }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 form-floating">
+                            {{ form.box_size(class="form-select form-select-lg rounded-pill pt-1", placeholder="Box size") }}
+                        </div>
+                    </div>
+                </div>
+                {{ form.submit(class="w-100 btn btn-lg btn-primary rounded-pill") }}
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

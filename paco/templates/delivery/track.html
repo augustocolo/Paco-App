@@ -1,0 +1,119 @@
+{% extends "base/base_dashboard.html" %}
+
+{% block content %}
+    <div class="container px-4 py-5 mt-5">
+        <div class="col-12 col-md-8 mx-auto">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="row mb-3">
+                <div class="col-12 col-md-8">
+                    <h4 class="fw-bold lh-1 mb-3">Tracking: from {{ delivery.get_locker_source().town }} to {{ delivery.get_locker_destination().town }}</h4>
+                </div>
+                <div class="col-12 col-md-4">
+                    <span class="badge rounded-pill bg-success ms-auto">{{ delivery.format_status() }}</span>
+                </div>
+            </div>
+        <div class="mb-3">{{ map.html }}</div>
+                {{ map.js }}
+            <div class="bg-light rounded px-3 py-2 mb-3">
+                <div class="row py-3">
+                    <div class="col col-12 col-md-3 my-1 my-md-auto">
+                        <h5>From</h5>
+                    </div>
+                    <div class="col col-12 col-md-5 my-1 my-md-auto">
+                        <p class="mb-0">{{ delivery.get_locker_source().name }}</p>
+                    </div>
+                    <div class="col col-12 col-md-4 my-1 my-md-auto">
+                        <a class="w-100 btn btn-primary rounded-pill" href="{{ delivery.get_locker_source().get_google_maps_directions() }}" target="_blank" rel="noopener noreferrer" >Go to locker</a>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-3 my-1 my-md-auto">
+                        <h5>To</h5>
+                    </div>
+                    <div class="col col-12 col-md-5 my-1 my-md-auto">
+                        <p class="mb-0">{{ delivery.get_locker_destination().name }}</p>
+                    </div>
+                    <div class="col col-12 col-md-4 my-1 my-md-auto">
+                        <a class="w-100 btn btn-primary rounded-pill" href="{{ delivery.get_locker_destination().get_google_maps_directions() }}" target="_blank" rel="noopener noreferrer" >Go to locker</a>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-3 my-1 my-md-auto">
+                        <h5>Dimension</h5>
+                    </div>
+                    <div class="col col-12 col-md-9 my-1 my-md-auto">
+                        <p class="mb-0">{{ delivery.get_dimension_from_int_to_text() }}</p>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-3 my-1 my-md-auto">
+                        <h5>Weight</h5>
+                    </div>
+                    <div class="col col-12 col-md-9 my-1 my-md-auto">
+                        <p class="mb-0">{{ delivery.weight }} kg</p>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-3 my-1 my-md-auto">
+                        <h5>Distance</h5>
+                    </div>
+                    <div class="col col-12 col-md-9 my-1 my-md-auto">
+                        <p class="mb-0">{{ delivery.get_distance_km() }} km</p>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-3 my-1 my-md-auto">
+                        <h5>Price</h5>
+                    </div>
+                    <div class="col col-12 col-md-9 my-1 my-md-auto">
+                        <p class="mb-0 fw-bold">{{ delivery.get_formatted_price() }}</p>
+                    </div>
+                </div>
+            </div>
+            <h4>Tracking history</h4>
+            <table class="table">
+                {% if delivery.get_status() >= 0 %}
+                    <tr>
+                        <td>{{ delivery.date_created.strftime("%d/%m/%Y %H:%M:%S") }}</td>
+                        <td>Delivery confirmed by Paco.</td>
+                    </tr>
+                {% endif %}
+                {% if delivery.get_status() >= 1 %}
+                    <tr>
+                        <td>{{ delivery.date_source_arrived.strftime("%d/%m/%Y %H:%M:%S") }}</td>
+                        <td>Delivery arrived at the source locker.</td>
+                    </tr>
+                {% endif %}
+                {% if delivery.get_status() >= 2 %}
+                    <tr>
+                        <td>{{ delivery.date_source_departed.strftime("%d/%m/%Y %H:%M:%S") }}</td>
+                        <td>Delivery en route. Driver {{ delivery.get_driver().username }} is delivering your parcel </td>
+                    </tr>
+                {% endif %}
+                {% if delivery.get_status() >= 3 %}
+                    <tr>
+                        <td>{{ delivery.date_destination_arrived.strftime("%d/%m/%Y %H:%M:%S") }}</td>
+                        <td>Delivery arrived at the destination locker.</td>
+                    </tr>
+                {% endif %}
+                {% if delivery.get_status() >= 4 %}
+                    <tr>
+                        <td>{{ delivery.date_destination_picked.strftime("%d/%m/%Y %H:%M:%S") }}</td>
+                        <td>Delivery completed.</td>
+                    </tr>
+                {% endif %}
+            </table>
+
+
+
+        </div>
+    </div>
+{% endblock %}

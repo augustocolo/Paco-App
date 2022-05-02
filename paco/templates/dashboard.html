@@ -1,0 +1,63 @@
+{% extends "base/base_dashboard.html" %}
+
+{% block content %}
+    <div class="container col-xxl-8 px-4 py-5 mt-5">
+        <div class="col-12 mx-auto">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <h4 class="mb-3">Welcome, {{ current_user.username }}</h4>
+            <div class="row row-cols-1 row-cols-md-2 mb-3">
+                <div class="col mb-2 mb-md-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Deliveries</h5>
+                            <h1 class="fw-bold">{{ delivery_count_last_month }}</h1>
+                            <h6 class="card-subtitle text-muted">Last month</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total spent</h5>
+                            <h1 class="fw-bold">{{ total_spent_last_month }}</h1>
+                            <h6 class="card-subtitle text-muted">Last month</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="fw-bold lh-1 mb-3">Recent deliveries</h4>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                    </thead>
+                    {% for delivery in deliveries %}
+                        <tr>
+                            <td>{{ delivery.date_created.strftime("%d/%m/%Y") }}</td>
+                            <td>{{ delivery.get_locker_source().name }}</td>
+                            <td>{{ delivery.get_locker_destination().name }}</td>
+                            <td>{{ delivery.format_status() }}</td>
+                            <td>{{ delivery.get_formatted_price() }}</td>
+                            <td><a href="{{ url_for('track_delivery', id=delivery.id) }}" role="button" class="btn btn-success rounded-pill">Tracking</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
