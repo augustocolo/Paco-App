@@ -124,6 +124,7 @@ fabric.properties
 pyvenv.cfg
 .venv
 pip-selfcheck.json
+venv/
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,venv
 
@@ -133,3 +134,6 @@ paco/static/.webassets-cache
 
 # Pycache
 __pycache__
+
+paco/paco.db
+

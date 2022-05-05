@@ -9,7 +9,15 @@ from paco.tokens import *
 from datetime import datetime
 from paco.directions import get_distance_between
 from paco.pricing import get_price
-from paco.decorators import email_required
+from paco.decorators import email_required, driver_required
+from paco.api import license_plates
+
+
+def flash_form_errors(form):
+    for elem in form:
+        if elem.errors:
+            for error in elem.errors:
+                flash('{}: {}'.format(elem.label.text, error), "danger")
 
 
 @app.route('/')
@@ -26,7 +34,7 @@ def index():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('show_dashboard'))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -59,14 +67,12 @@ def signup():
 
         return redirect(url_for('verify_email'))
     else:
-        for elem in form:
-            if elem.errors:
-                for error in elem.errors:
-                    flash(error, "danger")
+        flash_form_errors(form)
         return render_template("authentication/signup.html", form=form, title='Sign Up')
 
 
 @app.route('/logout', methods=["GET"])
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
@@ -104,6 +110,90 @@ def confirm_email(token):
         db.session.commit()
         flash('You successfully verified your account! Please log in.', 'success')
     return redirect(url_for('login'))
+
+
+@app.route('/driver/create', methods=["GET", "POST"])
+@login_required
+@email_required
+def become_driver():
+    if current_user.is_driver:
+        flash('You are already a driver', 'danger')
+        return redirect(url_for('show_dashboard'))
+    form = DriverSignupForm()
+    if form.validate_on_submit():
+        driver = DriverInfo(
+            id=current_user.id,
+            name=form.name.data,
+            surname=form.surname.data,
+            gender=bool(form.gender.data),
+            date_of_birth=form.date_of_birth.data,
+            town_of_birth=form.town_of_birth.data,
+            country_of_birth=form.country_of_birth.data,
+            fiscal_code=form.fiscal_code.data,
+            phone_number=form.phone_number.data,
+            address_street=form.address_street.data,
+            address_town=form.address_town.data,
+            address_zip_code=form.address_zip_code.data,
+            address_country=form.address_country.data,
+            license_number=form.license_code.data,
+            license_expiration=form.license_expiration.data,
+            license_issuing_authority=form.license_issuing_authority.data
+        )
+        current_user.is_driver = True
+        db.session.add(driver)
+        db.session.commit()
+        flash('You succesfully signed up as driver. Now insert your car\'s information', 'success')
+        return redirect(url_for('add_car'))
+
+    flash_form_errors(form)
+
+    return render_template("authentication/signup_driver.html", title="Become a driver", form=form)
+
+
+@app.route('/driver/car/add', methods=["GET", "POST"])
+@login_required
+@email_required
+@driver_required
+def add_car():
+    form = CarInfoAddForm()
+    if form.validate_on_submit():
+        info = license_plates.get_car_info(form.license_plate.data)
+        if info:
+            form2 = CarInfoConfirmForm(
+                license_plate=form.license_plate.data,
+                car_make=info['CarMake']['CurrentTextValue'],
+                car_model=info['CarModel']['CurrentTextValue'],
+                fuel_type=info['FuelType']['CurrentTextValue'],
+                power_cv=info['PowerCV'],
+                registration_year=int(info['RegistrationYear'])
+            )
+            return render_template('car/confirm.html', title='Confirm car', form=form2, car_image=info['ImageUrl'])
+        else:
+            flash('Please insert a valid license plate', 'danger')
+    flash_form_errors(form)
+    return render_template('car/add.html', title='Add a car', form=form)
+
+@app.route('/driver/car/confirm', methods=["POST"])
+@login_required
+@email_required
+@driver_required
+def confirm_car():
+    form = CarInfoConfirmForm()
+    if form.validate_on_submit():
+        car = CarInfo(
+            license_plate=form.license_plate.data,
+            driver_id=current_user.id,
+            car_make=form.car_make.data,
+            car_model=form.car_model.data,
+            fuel_type=form.fuel_type.data,
+            registration_year=form.registration_year.data,
+            power_cv=form.power_cv.data
+        )
+        db.session.add(car)
+        db.session.commit()
+        flash('You succesfully added {} to your cars'.format(form.license_plate.data), 'success')
+    flash_form_errors(form)
+    return redirect(url_for('show_dashboard'))
 
 
 # DASHBOARD ACTIONS
@@ -192,10 +282,7 @@ def create_delivery():
                                text_dimension=Delivery.dimension_from_int_to_text(form.box_size.data),
                                map_from=map_from, map_to=map_to)
     else:
-        for elem in form:
-            if elem.errors:
-                for error in elem.errors:
-                    flash(error, "danger")
+        flash_form_errors(form)
         towns = set()
         for locker in db.session.query(Locker.town):
             towns.add(locker[0])
@@ -240,10 +327,7 @@ def send_locker_choice():
                                distance='{} km'.format(int(distance / 1000)),
                                price=Delivery.format_price(price))
     else:
-        for elem in form:
-            if elem.errors:
-                for error in elem.errors:
-                    flash(error, "danger")
+        flash_form_errors(form)
         form2 = SendParcelFormIntro()
         towns = set()
         for locker in db.session.query(Locker.town):
@@ -293,6 +377,7 @@ def show_locker_qr(id):
 
 
 # Tracking
+
 @app.route('/delivery/track/<int:id>')
 @login_required
 def track_delivery(id):

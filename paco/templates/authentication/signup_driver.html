@@ -1,0 +1,93 @@
+{% extends "base/base_dashboard.html" %}
+
+{% block content %}
+    <div class="container col-xxl-8 px-4 py-5 mt-5">
+        <div class="col-12 col-md-6 mx-auto">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <h4 class="fw-bold lh-1 mb-3">Become a driver</h4>
+            <h5>Personal information</h5>
+            <form class="p-1 p-md-1 form-floating" method="POST" action="">
+                {{  form.hidden_tag() }}
+                <div class="form-floating">
+                    {{ form.name(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Name", autocomplete="given-name") }}
+                    {{ form.name.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.surname(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Surname", autocomplete="family-name") }}
+                    {{ form.surname.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.gender(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Gender", autocomplete="sex") }}
+                    {{ form.gender.label(class="px-4") }}
+
+                </div>
+                <div class="form-floating">
+                    {{ form.date_of_birth(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Date of birth", autocomplete="bday") }}
+                    {{ form.date_of_birth.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.town_of_birth(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Town of birth") }}
+                    {{ form.town_of_birth.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.country_of_birth(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Country of birth") }}
+                    {{ form.country_of_birth.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.fiscal_code(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Fiscal code") }}
+                    {{ form.fiscal_code.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.phone_number(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Phone number") }}
+                    {{ form.phone_number.label(class="px-4") }}
+                </div>
+                <h5>Your address</h5>
+                <div class="form-floating">
+                    {{ form.address_street(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Street", autocomplete="street-address") }}
+                    {{ form.address_street.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.address_town(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Town") }}
+                    {{ form.address_town.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.address_zip_code(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Zip code") }}
+                    {{ form.address_zip_code.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.address_country(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Country") }}
+                    {{ form.address_country.label(class="px-4") }}
+                </div>
+                <h5>Your driving license</h5>
+                <div class="form-floating">
+                    {{ form.license_code(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Number") }}
+                    {{ form.license_code.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.license_expiration(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Expiration date") }}
+                    {{ form.license_expiration.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.license_issuing_authority(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Issuing authority") }}
+                    {{ form.license_issuing_authority.label(class="px-4") }}
+                </div>
+                <div class="row mb-3 px-3">
+                    <div class="form-check form-switch">
+                        {{ form.terms_of_contract.label(class="form-check-label") }}
+                        {{ form.terms_of_contract(class="form-check-input") }}
+                    </div>
+                </div>
+
+                {{ form.submit(class="w-100 btn btn-lg btn-primary rounded-pill") }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

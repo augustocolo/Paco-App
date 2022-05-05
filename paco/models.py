@@ -164,3 +164,41 @@ class Delivery(db.Model):
 
     def get_driver(self):
         return User.query.filter_by(id=self.driver_id).first()
+
+
+class DriverInfo(db.Model):
+    id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    # PERSONAL INFO
+    name = db.Column(db.String(60), nullable=False)
+    surname = db.Column(db.String(60), nullable=False)
+    gender = db.Column(db.Boolean, nullable=False) # 0->male 1->female
+    date_of_birth = db.Column(db.Date, nullable=False)
+    town_of_birth = db.Column(db.String(60), nullable=False)
+    country_of_birth = db.Column(db.String(60), nullable=False)
+    fiscal_code = db.Column(db.String(16), nullable=False)
+    phone_number = db.Column(db.String(20), nullable=False)
+
+    # ADDRESS
+    address_street = db.Column(db.String(60), nullable=False)
+    address_town = db.Column(db.String(60), nullable=False)
+    address_zip_code = db.Column(db.String(60), nullable=False)
+    address_country = db.Column(db.String(60), nullable=False)
+
+    # DRIVERS LICENSE
+    license_number = db.Column(db.String(60), nullable=False)
+    license_expiration = db.Column(db.Date, nullable=False)
+    license_issuing_authority = db.Column(db.String(60), nullable=False)
+
+
+class CarInfo(db.Model):
+    license_plate = db.Column(db.String(7), primary_key=True, nullable=False)
+    driver_id = db.Column(db.Integer, db.ForeignKey('driver_info.id'), nullable=False)
+    car_make = db.Column(db.String(60), nullable=False)
+    car_model = db.Column(db.String(60), nullable=False)
+    fuel_type = db.Column(db.String(60), nullable=False)
+    registration_year = db.Column(db.Integer, nullable=False)
+    power_cv = db.Column(db.Integer)
+
+

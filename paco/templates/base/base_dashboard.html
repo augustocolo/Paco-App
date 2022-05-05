@@ -16,11 +16,13 @@
                         <a class="nav-link btn btn-success text-white rounded-pill px-3" href="{{ url_for('create_delivery') }}">
                             <i class="bi bi-plus-lg me-1"></i>Send Parcel</a>
                     </li>
+                    {% if not current_user.is_driver %}
                     <li class="nav-item my-2 my-md-auto me-1">
-                        <a class="nav-link btn btn-dark text-white rounded-pill px-3" href="#">
+                        <a class="nav-link btn btn-dark text-white rounded-pill px-3" href="{{ url_for('become_driver') }}">
                             Become a driver
                         </a>
                     </li>
+                    {% endif %}
 
                     <li class="nav-item">
                         <div class="dropdown">
