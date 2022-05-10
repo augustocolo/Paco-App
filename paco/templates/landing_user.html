@@ -22,7 +22,7 @@
                         {% else %}
                       method="GET"
                         {% endif %}
-                      action="{{ url_for('create_delivery') }}">
+                      action="{{ url_for('delivery.create') }}">
                     {{ form.hidden_tag() }}
                     <div class="form-floating">
                         {{ form.send_from(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="You want to send it from...", list="datalistOptions") }}

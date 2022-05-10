@@ -14,16 +14,16 @@
             {% endwith %}
             <h4 class="mb-3">Welcome, {{ current_user.username }}</h4>
             <div class="row row-cols-1 row-cols-md-2 mb-3">
-                <div class="col mb-2 mb-md-0">
+                <div class="col mb-2">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Deliveries</h5>
-                            <h1 class="fw-bold">{{ delivery_count_last_month }}</h1>
+                            <h5 class="card-title">Parcels sent</h5>
+                            <h1 class="fw-bold">{{ deliveries_sent_count_last_month }}</h1>
                             <h6 class="card-subtitle text-muted">Last month</h6>
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col mb-2">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Total spent</h5>
@@ -32,9 +32,29 @@
                         </div>
                     </div>
                 </div>
+                {% if current_user.is_driver %}
+                    <div class="col mb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Parcels delivered</h5>
+                                <h1 class="fw-bold">{{ deliveries_delivered_count_last_month }}</h1>
+                                <h6 class="card-subtitle text-muted">Last month</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total earned</h5>
+                                <h1 class="fw-bold">{{ total_earned_last_month }}</h1>
+                                <h6 class="card-subtitle text-muted">Last month</h6>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
 
-            <h4 class="fw-bold lh-1 mb-3">Recent deliveries</h4>
+            <h4 class="fw-bold lh-1 mb-3">Parcels you recently sent:</h4>
             <div class="table-responsive">
                 <table class="table align-middle">
                     <thead>
@@ -46,14 +66,14 @@
                         <th scope="col">Price</th>
                     </tr>
                     </thead>
-                    {% for delivery in deliveries %}
+                    {% for delivery in deliveries_sent %}
                         <tr>
                             <td>{{ delivery.date_created.strftime("%d/%m/%Y") }}</td>
                             <td>{{ delivery.get_locker_source().name }}</td>
                             <td>{{ delivery.get_locker_destination().name }}</td>
                             <td>{{ delivery.format_status() }}</td>
                             <td>{{ delivery.get_formatted_price() }}</td>
-                            <td><a href="{{ url_for('track_delivery', id=delivery.id) }}" role="button" class="btn btn-success rounded-pill">Tracking</a></td>
+                            <td><a href="{{ url_for('delivery.track', id=delivery.id) }}" role="button" class="btn btn-success rounded-pill">Tracking</a></td>
                         </tr>
                     {% endfor %}
                 </table>

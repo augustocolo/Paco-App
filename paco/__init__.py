@@ -8,6 +8,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_googlemaps import GoogleMaps
 from flask_qrcode import QRcode
+import googlemaps
 
 app = Flask(__name__)
 
@@ -21,7 +22,7 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
 login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'auth.login'
 login_manager.login_message_category = 'info'
 
 # Email
@@ -34,9 +35,12 @@ app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
 app.config['MAIL_DEFAULT_SENDER'] = 'pacodelivery@libero.it'
 mail = Mail(app)
 
-# Maps API
+# Embedded Maps API
 app.config['GOOGLEMAPS_KEY'] = os.environ.get('GOOGLE_MAPS_API_KEY')
 GoogleMaps(app)
+
+# Google Maps Services
+gmaps = googlemaps.Client(key=os.environ.get('GOOGLE_MAPS_API_KEY'))
 
 # QR Codes
 QRcode(app)
@@ -54,6 +58,7 @@ js = Bundle(
     "assets/node_modules/jquery/dist/jquery.min.js",
     "assets/node_modules/@popperjs/core/dist/umd/popper.js",
     "assets/node_modules/bootstrap/dist/js/bootstrap.js",
+    "assets/js/geolocation.js",
     filters="jsmin",
     output="js/generated.js"
 )
@@ -69,4 +74,15 @@ assets.register("scss_all", scss)  # 4. register the generated css file, to be u
 
 
 from paco import routes
+from paco.blueprints.auth.routes import auth
+from paco.blueprints.delivery.routes import delivery
+from paco.blueprints.driver.routes import driver
+from paco.blueprints.locker.routes import locker
+from paco.blueprints.user.routes import user
+
+app.register_blueprint(auth)
+app.register_blueprint(delivery)
+app.register_blueprint(driver)
+app.register_blueprint(locker)
+app.register_blueprint(user)
 

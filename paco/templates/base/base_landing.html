@@ -41,11 +41,11 @@
                                     <li><a class="dropdown-item" href="{{ url_for('show_dashboard') }}">Dashboard</a>  </li>
                                     <li><a class="dropdown-item" href="#">Your account</a>  </li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
                                 {% else %}
-                                    <li><a class="dropdown-item" href="{{ url_for('login') }}">Login</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">Login</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="{{ url_for('signup') }}">Sign Up</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('auth.signup') }}">Sign Up</a></li>
                                 {% endif %}
                             </ul>
                         </div>

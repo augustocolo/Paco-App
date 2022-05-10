@@ -12,61 +12,88 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-            <h4 class="fw-bold lh-1 mb-3">Confirm car information</h4>
+            <h4 class="fw-bold lh-1 mb-3">Confirm your session</h4>
+        <div class="mb-3">{{ map.html }}</div>
+            {{ map.js }}
             <div class="bg-light rounded px-3 py-2 mb-3">
                 <div class="row py-3">
-                        <img src="{{ car_image }}" class="rounded-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>Car</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ formatted_car }}</p>
+                    </div>
                 </div>
                 <div class="row py-3">
                     <div class="col col-12 col-md-4 my-auto">
-                        <h5>License Plate</h5>
+                        <h5>Start address</h5>
                     </div>
                     <div class="col col-12 col-md-8">
-                        <p class="mb-0">{{ form.license_plate.data }}</p>
+                        <p class="mb-0">{{ form.from_location_geocoded.data }}</p>
+                    </div>
+                </div>
+                <div class="row py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>Pick up parcels at locker</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ from_locker }}</p>
                     </div>
                 </div>
                 <div class="row border-top py-3">
                     <div class="col col-12 col-md-4 my-auto">
-                        <h5>Manufacturer</h5>
+                        <h5>Drop parcels at locker</h5>
                     </div>
                     <div class="col col-12 col-md-8">
-                        <p class="mb-0">{{ form.car_make.data }}</p>
+                        <p class="mb-0">{{ to_locker }}</p>
                     </div>
                 </div>
                 <div class="row border-top py-3">
                     <div class="col col-12 col-md-4 my-auto">
-                        <h5>Model</h5>
+                        <h5>End address</h5>
                     </div>
                     <div class="col col-12 col-md-8">
-                        <p class="mb-0">{{ form.car_model.data }}</p>
+                        <p class="mb-0">{{ form.to_location_geocoded.data }}</p>
                     </div>
                 </div>
                 <div class="row border-top py-3">
                     <div class="col col-12 col-md-4 my-auto">
-                        <h5>Fuel Type</h5>
+                        <h5>Parcels</h5>
                     </div>
                     <div class="col col-12 col-md-8">
-                        <p class="mb-0">{{ form.fuel_type.data }}</p>
+                        <p class="mb-0 fw-bold">Total: {{ solution|length }}</p>
+                        {% for parcel in solution %}
+                            <p class="mb-0 ">{{ parcel.get_dimension_from_int_to_text() }}</p>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="row border-top py-3">
                     <div class="col col-12 col-md-4 my-auto">
-                        <h5>Power</h5>
+                        <h5>Reward</h5>
                     </div>
                     <div class="col col-12 col-md-8">
-                        <p class="mb-0">{{ form.power_cv.data }} CV</p>
+                        <p class="mb-0 fw-bold">{{ reward_to_driver }}</p>
                     </div>
                 </div>
-                <div class="row border-top py-3">
+            <div class="row border-top py-3">
                     <div class="col col-12 col-md-4 my-auto">
-                        <h5>Registration year</h5>
+                        <h5>Total distance</h5>
                     </div>
                     <div class="col col-12 col-md-8">
-                        <p class="mb-0">{{ form.registration_year.data }}</p>
+                        <p class="mb-0">{{ total_distance }} km</p>
+                    </div>
+                </div>
+            <div class="row border-top py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>Total duration</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ total_duration }}</p>
                     </div>
                 </div>
             </div>
-            <form class="p-1 p-md-1 mb-3" method="POST" action="{{ url_for('confirm_car') }}">
+
+            <form class="p-1 p-md-1 mb-3" method="POST" action="{{ url_for('driver.confirm_session') }}">
                 {{ form.hidden_tag() }}
                 {{ form.submit(class="w-100 btn btn-lg btn-success rounded-pill") }}
             </form>

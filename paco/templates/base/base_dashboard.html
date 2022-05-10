@@ -13,15 +13,31 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto fs-6">
                     <li class="nav-item mt-4 mb-2 my-md-auto me-1 ">
-                        <a class="nav-link btn btn-success text-white rounded-pill px-3" href="{{ url_for('create_delivery') }}">
+                        <a class="nav-link btn btn-success text-white rounded-pill px-3" href="{{ url_for('delivery.create') }}">
                             <i class="bi bi-plus-lg me-1"></i>Send Parcel</a>
                     </li>
-                    {% if not current_user.is_driver %}
-                    <li class="nav-item my-2 my-md-auto me-1">
-                        <a class="nav-link btn btn-dark text-white rounded-pill px-3" href="{{ url_for('become_driver') }}">
-                            Become a driver
-                        </a>
-                    </li>
+                    {% if current_user.is_driver %}
+                        {% if current_user.is_in_driving_session() %}
+                            <li class="nav-item my-2 my-md-auto me-1">
+                                <a class="nav-link btn btn-warning fw-bold rounded-pill px-3" href="{{ url_for('driver.next_step_session') }}">
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    Active session
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item my-2 my-md-auto me-1">
+                                <a class="nav-link btn btn-dark text-white rounded-pill px-3" href="{{ url_for('driver.start_session') }}">
+                                    <i class="bi bi-arrow-bar-right"></i>
+                                    Start Driving Session
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% else %}
+                        <li class="nav-item my-2 my-md-auto me-1">
+                            <a class="nav-link btn btn-dark text-white rounded-pill px-3" href="{{ url_for('driver.create') }}">
+                                Become a driver
+                            </a>
+                        </li>
                     {% endif %}
 
                     <li class="nav-item">
@@ -35,7 +51,7 @@
                                     <li><a class="dropdown-item" href="{{ url_for('show_dashboard') }}">Dashboard</a>  </li>
                                     <li><a class="dropdown-item" href="#">Your account</a>  </li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
                                 {% else %}
                                     <li><a class="dropdown-item" href="/login">Login</a></li>
                                     <li><hr class="dropdown-divider"></li>

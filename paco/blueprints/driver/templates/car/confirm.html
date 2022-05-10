@@ -1,0 +1,75 @@
+{% extends "base/base_dashboard.html" %}
+
+{% block content %}
+    <div class="container px-4 py-5 mt-5">
+        <div class="col-12 col-md-6 mx-auto">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <h4 class="fw-bold lh-1 mb-3">Confirm car information</h4>
+            <div class="bg-light rounded px-3 py-2 mb-3">
+                <div class="row py-3">
+                        <img src="{{ car_image }}" class="rounded-3">
+                </div>
+                <div class="row py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>License Plate</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ form.license_plate.data }}</p>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>Manufacturer</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ form.car_make.data }}</p>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>Model</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ form.car_model.data }}</p>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>Fuel Type</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ form.fuel_type.data }}</p>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>Power</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ form.power_cv.data }} CV</p>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>Registration year</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ form.registration_year.data }}</p>
+                    </div>
+                </div>
+            </div>
+            <form class="p-1 p-md-1 mb-3" method="POST" action="{{ url_for('driver.confirm_car') }}">
+                {{ form.hidden_tag() }}
+                {{ form.submit(class="w-100 btn btn-lg btn-success rounded-pill") }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

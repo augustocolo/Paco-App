@@ -1,0 +1,24 @@
+{% extends "base/base_dashboard.html" %}
+
+{% block content %}
+    <div class="container col-xxl-8 px-4 py-5 mt-5">
+        <div class="col-12">
+            <h3 class="fw-bold lh-1 mb-3">Scan QR</h3>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-7 rounded ">
+                    <!-- QR Reader -->
+                    <div>
+                        <div id="loadingMessage" hidden="false">⌛ Loading video...</div>
+                        <canvas id="canvas" height="300" width="300" class="rounded w-100"></canvas>
+                        <div id="output">
+                            <div id="outputMessage">No QR code detected.</div>
+                            <div hidden="true"><b>Data:</b> <span id="outputData"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='/assets/js/jsqr.js') }}"></script>
+    <script src="{{ url_for('static', filename='/assets/js/pacoqr.js') }}"></script>
+{% endblock %}

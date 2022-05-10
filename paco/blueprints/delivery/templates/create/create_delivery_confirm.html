@@ -19,7 +19,7 @@
                         <h5>From</h5>
                     </div>
                     <div class="col col-12 col-md-8">
-                        <p class="mb-0">{{ from_town }}</p>
+                        <p class="mb-0">{{ from_locker }}</p>
                     </div>
                 </div>
                 <div class="row border-top py-3">
@@ -27,7 +27,7 @@
                         <h5>To</h5>
                     </div>
                     <div class="col col-12 col-md-8">
-                        <p class="mb-0">{{ to_town }}</p>
+                        <p class="mb-0">{{ to_locker }}</p>
                     </div>
                 </div>
                 <div class="row border-top py-3">
@@ -46,20 +46,24 @@
                         <p class="mb-0">{{ form.weight.data }} kg</p>
                     </div>
                 </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>Distance</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0">{{ distance }}</p>
+                    </div>
+                </div>
+                <div class="row border-top py-3">
+                    <div class="col col-12 col-md-4 my-auto">
+                        <h5>Price</h5>
+                    </div>
+                    <div class="col col-12 col-md-8">
+                        <p class="mb-0 fw-bold">{{ price }}</p>
+                    </div>
+                </div>
             </div>
-            <form class="p-1 p-md-1 mb-3" method="POST" action="{{ url_for('send_locker_choice') }}">
-                <h4 class="fw-bold lh-1 mb-3">Step 1:</h4>
-                <h5>Choose a locker in {{ from_town }}</h5>
-                <div class="mb-3">{{ map_from.html }}</div>
-                {{ map_from.js }}
-                {{ form.locker_source_id(class="btn-group-vertical w-100 mb-3") }}
-
-                <h4>Step 2:</h4>
-                <h5>Choose a locker in {{ to_town }}</h5>
-                <div class="mb-3">{{ map_to.html }}</div>
-                {{ map_to.js }}
-                {{ form.locker_destination_id(class="btn-group-vertical w-100 mb-3") }}
-
+            <form class="p-1 p-md-1 mb-3" method="POST" action="{{ url_for('delivery.confirm') }}">
                 {{ form.hidden_tag() }}
                 {{ form.submit(class="w-100 btn btn-lg btn-success rounded-pill") }}
             </form>

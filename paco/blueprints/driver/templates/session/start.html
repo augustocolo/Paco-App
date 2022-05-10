@@ -1,0 +1,45 @@
+{% extends "base/base_dashboard.html" %}
+
+{% block content %}
+    <div class="container col-xxl-8 px-4 py-5 mt-5">
+        <div class="col-12 col-md-6 mx-auto">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <h4 class="fw-bold lh-1 mb-3">Start driving session</h4>
+            <form class="p-1 p-md-1 form-floating" method="POST" action="">
+                {{  form.hidden_tag() }}
+                <div class="form-floating">
+                    {{ form.license_plate(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="License plate") }}
+                    {{ form.license_plate.label(class="px-4") }}
+                </div>
+                <div class="input-group mb-3 form-floating">
+                    {{ form.from_location(class="form-control form-control-lg rounded-pill px-4", placeholder="You're going to start from...", style="border-top-right-radius:0px!important; border-bottom-right-radius:0px!important;") }}
+                    <span class="input-group-append" >
+                            <button class="btn btn-primary rounded-pill h-100" type="button" style="border-top-left-radius:0px!important; border-bottom-left-radius:0px!important;" onclick="getDriverLocation();">
+                                <i class="bi bi-compass mx-2"></i>
+                            </button>
+                    </span>
+                    {{ form.from_location.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.to_location(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="You're going to arrive to...") }}
+                    {{ form.to_location.label(class="px-4") }}
+                </div>
+                <div class="form-floating">
+                    {{ form.liters_available(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Space available") }}
+                    {{ form.liters_available.label(class="px-4") }}
+                </div>
+
+                {{ form.submit(class="w-100 btn btn-lg btn-primary rounded-pill") }}
+
+            </form>
+        </div>
+    </div>
+{% endblock %}
