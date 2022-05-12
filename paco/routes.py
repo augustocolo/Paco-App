@@ -27,7 +27,6 @@ def show_dashboard():
     total_earned = current_user.get_earned_last_month()
     deliveries_delivered_count = current_user.get_deliveries_delivered_count_last_month()
 
-
     return render_template("dashboard.html", title="Dashboard",
                            current_user=current_user, deliveries_sent=deliveries_sent,
                            total_spent_last_month=Delivery.format_price(total_spent),
@@ -35,6 +34,7 @@ def show_dashboard():
                            deliveries_delivered=deliveries_delivered,
                            total_earned_last_month=Delivery.format_price(total_earned),
                            deliveries_delivered_count_last_month=deliveries_delivered_count)
+
 
 @app.route('/qr')
 def scan_qr():

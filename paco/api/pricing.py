@@ -8,7 +8,7 @@ def get_price(distance, box_size, weight, fragile=False):
         3: 1.3
     }
 
-    weight_mult_dict = [0, 1, 1.0, 1.3]
+    weight_mult_dict = [0, 1.0, 1.2, 1.3]
 
     '''
         {
@@ -23,12 +23,12 @@ def get_price(distance, box_size, weight, fragile=False):
     if weight > 11:
         weight_mult = weight_mult_dict[3]
     elif weight > 5:
-        weight_mult = weight_mult_dict[2],
+        weight_mult = weight_mult_dict[2]
     else:
         weight_mult = weight_mult_dict[1]
 
     box_size_mult = box_size_mult_dict[box_size]
 
-    fragile_mult = 1.5 if fragile else 1
+    fragile_mult = 1.5 if fragile else 1.0
 
-    return int(_price_per_m * weight_mult * box_size_mult * fragile_mult * float(distance))
+    return int(_price_per_m * weight_mult * box_size_mult * fragile_mult * distance)

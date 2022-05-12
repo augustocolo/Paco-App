@@ -1,0 +1,5 @@
+{% extends 'emails/delivery_update_base.html' %}
+
+{% block message %}
+    <p>Your parcel was picked up by {{ delivery.get_driver().username }} from {{ delivery.get_locker_source().name }}. It is now on its way to {{ delivery.get_locker_destination().name }}.</p>
+{% endblock %}

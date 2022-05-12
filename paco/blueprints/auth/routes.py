@@ -66,10 +66,10 @@ def verify_email():
     if not current_user.email_confirmed:
         # Generate confirmation email
         token = generate_confirmation_token(current_user.email)
-        confirm_url = url_for('auth.confirm_email', token=token, _external=True)
-        html = render_template('emails/confirmation_email.html', confirm_url=confirm_url)
-        subject = "Please confirm your email"
-        send_email(current_user.email, subject, html)
+        send_email([current_user.email],
+                   'Please confirm your email',
+                   render_template('emails/verification_email.html',
+                                   confirm_url=url_for('auth.confirm_email', token=token, _external=True)))
         return render_template("verify_email.html", title="Verify Email")
     else:
         return redirect(url_for('show_dashboard'))

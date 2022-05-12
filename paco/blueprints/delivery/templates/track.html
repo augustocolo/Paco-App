@@ -14,7 +14,7 @@
             {% endwith %}
             <div class="row mb-3">
                 <div class="col-12 col-md-8">
-                    <h4 class="fw-bold lh-1 mb-3">Tracking: from {{ delivery.get_locker_source().town }} to {{ delivery.get_locker_destination().town }}</h4>
+                    <h4 class="fw-bold lh-1 mb-3">Tracking {{ delivery.tracking_id }}: from {{ delivery.get_locker_source().town }} to {{ delivery.get_locker_destination().town }}</h4>
                 </div>
                 <div class="col-12 col-md-4">
                     <span class="badge rounded-pill bg-success ms-auto">{{ delivery.format_status() }}</span>
@@ -69,6 +69,7 @@
                         <p class="mb-0">{{ delivery.get_distance_km() }} km</p>
                     </div>
                 </div>
+                {% if current_user.id == delivery.get_sender().id %}
                 <div class="row border-top py-3">
                     <div class="col col-12 col-md-3 my-1 my-md-auto">
                         <h5>Price</h5>
@@ -77,6 +78,7 @@
                         <p class="mb-0 fw-bold">{{ delivery.get_formatted_price() }}</p>
                     </div>
                 </div>
+                {% endif %}
             </div>
             <h4>Tracking history</h4>
             <table class="table">

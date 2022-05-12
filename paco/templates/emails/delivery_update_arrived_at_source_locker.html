@@ -1,0 +1,5 @@
+{% extends 'emails/delivery_update_base.html' %}
+
+{% block message %}
+    <p>Your parcel has arrived at {{ delivery.get_locker_source().name }}. A driver will pick it up soon.</p>
+{% endblock %}

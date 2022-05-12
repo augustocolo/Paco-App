@@ -1,0 +1,5 @@
+{% extends 'emails/delivery_update_base.html' %}
+
+{% block message %}
+    <p>Your parcel was picked up from {{ delivery.get_locker_destination().name }}. The delivery is now completed.</p>
+{% endblock %}

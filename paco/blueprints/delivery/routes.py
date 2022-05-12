@@ -18,8 +18,20 @@ def create():
     form = SendParcelFormIntro()
     if form.validate_on_submit():
         # prendi locker in città
-        send_from_lockers = Locker.query.filter_by(town=form.send_from.data).all()
-        send_to_lockers = Locker.query.filter_by(town=form.send_to.data).all()
+        send_from_lockers_all = Locker.query.filter_by(town=form.send_from.data).all()
+        send_to_lockers_all = Locker.query.filter_by(town=form.send_to.data).all()
+
+        # filtra lockers con spazio disponibile
+        send_from_lockers = []
+        for locker in send_from_lockers_all:
+            if locker.has_space_free(form.box_size.data):
+                send_from_lockers.append(locker)
+
+        send_to_lockers = []
+        for locker in send_to_lockers_all:
+            if locker.has_space_free(form.box_size.data):
+                send_to_lockers.append(locker)
+
 
         # Create Google Maps
         gmap_style = "width:100%;margin:0;height:200px"
@@ -143,6 +155,8 @@ def confirm():
     form = SendParcelFormConfirmation()
 
     if form.validate_on_submit():
+        # Add delivery
+        email_recipient = form.email_recipient.data if form.email_recipient.data else None
         delivery = Delivery(
             sender_id=form.sender_id.data,
             locker_source_id=form.locker_source_id.data,
@@ -150,9 +164,18 @@ def confirm():
             weight=form.weight.data,
             dimension=form.dimension.data,
             distance=form.distance.data,
-            price=form.price.data
+            price=form.price.data,
+            email_recipient=email_recipient,
+            tracking_id=Delivery.generate_tracking_id()
         )
         db.session.add(delivery)
+        db.session.commit()
+
+        # TODO: SEND CONFIRMATION E-MAIL
+
+        # Reserve space
+        delivery.get_locker_source().reserve_space(delivery)
+        delivery.get_locker_destination().reserve_space(delivery)
         db.session.commit()
 
         return redirect(url_for('show_dashboard'))
@@ -160,10 +183,9 @@ def confirm():
         flash("There was an error while processing your request. Try again!", "danger")
         return redirect(url_for('delivery.create'))
 
-@delivery.route('/track/<int:id>')
-@login_required
-def track(id):
-    delivery = Delivery.query.filter_by(id=id).first()
+@delivery.route('/track/<string:tracking_id>')
+def track(tracking_id):
+    delivery = Delivery.query.filter_by(tracking_id=tracking_id).first()
     if delivery:
         gmap_style = "width:100%;margin:0;height:200px"
         map = Map(

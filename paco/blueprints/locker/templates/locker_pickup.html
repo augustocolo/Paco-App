@@ -1,0 +1,39 @@
+{% extends "base/base_landing.html" %}
+
+{% block content %}
+    <div class="container col-lg-4 px-4 py-5 mt-5">
+        <div class="col-12 mx-auto">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="row mb-3">
+                <div class="col-12">
+                    <h4 class="fw-bold lh-1 mb-3">Pick up a delivery</h4>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <h5>Please enter the delivery tracking number</h5>
+                </div>
+            </div>
+            <form class="p-1 p-md-1 form-floating" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-floating">
+                    {{ form.tracking_id(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Tracking number") }}
+                    {{ form.tracking_id.label(class="px-4") }}
+                </div>
+            </form>
+            <div class="row mb-3 d-flex justify-content-center align-content-center">
+                <div class="col-10 col-md-6">
+                    <a class="btn btn-success text-white rounded-pill px-3 btn-lg w-100">Pick up parcel <i class="bi bi-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

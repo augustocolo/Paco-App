@@ -20,6 +20,25 @@ for row in csvreader:
                            latitude=float(row[7]),
                            longitude=float(row[8]))
     db.session.add(locker)
+    db.session.commit()
+    # Standard Locker 20 small 10 medium 3 large
+    for i in range(1, 21):
+        locker_space = models.LockerSpace(id=i,
+                                          locker_id=locker.id,
+                                          dimension=1)
+        db.session.add(locker_space)
+
+    for i in range(21, 31):
+        locker_space = models.LockerSpace(id=i,
+                                          locker_id=locker.id,
+                                          dimension=2)
+        db.session.add(locker_space)
+
+    for i in range(31, 34):
+        locker_space = models.LockerSpace(id=i,
+                                          locker_id=locker.id,
+                                          dimension=3)
+        db.session.add(locker_space)
 db.session.commit()
 
 file.close()

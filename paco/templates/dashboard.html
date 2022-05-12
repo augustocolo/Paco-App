@@ -73,7 +73,7 @@
                             <td>{{ delivery.get_locker_destination().name }}</td>
                             <td>{{ delivery.format_status() }}</td>
                             <td>{{ delivery.get_formatted_price() }}</td>
-                            <td><a href="{{ url_for('delivery.track', id=delivery.id) }}" role="button" class="btn btn-success rounded-pill">Tracking</a></td>
+                            <td><a href="{{ url_for('delivery.track', tracking_id=delivery.tracking_id) }}" role="button" class="btn btn-success rounded-pill">Tracking</a></td>
                         </tr>
                     {% endfor %}
                 </table>

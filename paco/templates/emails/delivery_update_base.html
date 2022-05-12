@@ -1,0 +1,8 @@
+<p>There is an update about your delivery from <b>{{ delivery.get_locker_source().name }}</b> to <b>{{ delivery.get_locker_destination().name }}</b>:</p>
+{% block message %}
+{% endblock %}
+<p>We are tracking your parcel and we will update you as soon as possible; you can check its status at the following link<br>
+<a href="{{ url_for('delivery.track', tracking_id=delivery.tracking_id, _external=True) }}">Track parcel</a></p>
+
+<p>Thank you for choosing us,<br>
+    Paco</p>

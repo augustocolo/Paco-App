@@ -64,6 +64,11 @@
                 </div>
             </div>
             <form class="p-1 p-md-1 mb-3" method="POST" action="{{ url_for('delivery.confirm') }}">
+                <p>Add the email of your recipient, so that we can keep him updated.</p>
+                <div class="form-floating">
+                    {{ form.email_recipient(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Recipient email") }}
+                    {{ form.email_recipient.label(class="px-4") }}
+                </div>
                 {{ form.hidden_tag() }}
                 {{ form.submit(class="w-100 btn btn-lg btn-success rounded-pill") }}
             </form>

@@ -34,6 +34,7 @@ def confirm_qr(token, expiration=65):
             salt=app.config['SECURITY_PASSWORD_SALT'],
             max_age=expiration
         )
+        res = int(id)
     except:
         return False
-    return int(id)
+    return res

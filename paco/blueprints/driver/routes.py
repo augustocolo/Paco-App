@@ -363,10 +363,10 @@ def next_step_session():
         if deliveries[0].status == 1:
             return render_template('session/next.html', current_user=current_user, title='Go to {}'.format(deliveries[0].get_locker_source().name),
                                    session=session, deliveries=deliveries, map=map)
-            pass
         elif deliveries[0].status == 2:
-            # Go to second locker
-            pass
+            return render_template('session/next.html', current_user=current_user,
+                                   title='Go to {}'.format(deliveries[0].get_locker_destination().name),
+                                   session=session, deliveries=deliveries, map=map)
         else:
             flash('This session is not valid.', 'danger')
             return redirect(url_for('show_dashboard'))
