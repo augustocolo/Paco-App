@@ -3,6 +3,7 @@ from flask_googlemaps import Map
 from flask_login import login_required, current_user
 
 from paco import db, gmaps
+from paco.api.email import send_email
 from paco.api.pricing import get_price
 from paco.blueprints.delivery.forms import SendParcelFormIntro, SendParcelFormLockerChoice, SendParcelFormConfirmation
 from paco.models import Locker, Delivery
@@ -171,12 +172,18 @@ def confirm():
         db.session.add(delivery)
         db.session.commit()
 
-        # TODO: SEND CONFIRMATION E-MAIL
-
         # Reserve space
         delivery.get_locker_source().reserve_space(delivery)
         delivery.get_locker_destination().reserve_space(delivery)
         db.session.commit()
+
+        # Send email
+        mail_recipients = [delivery.get_sender().email]
+        if delivery.email_recipient:
+            mail_recipients.append(delivery.email_recipient)
+        send_email(mail_recipients,
+                   'Paco - Delivery {} created'.format(delivery.tracking_id),
+                   render_template('emails/delivery_update_created.html', delivery=delivery))
 
         return redirect(url_for('show_dashboard'))
     else:

@@ -1,0 +1,5 @@
+{% extends 'emails/delivery_update_base.html' %}
+
+{% block message %}
+    <p>A delivery was created by {{ delivery.get_sender().username }} and confirmed by Paco.</p>
+{% endblock %}
