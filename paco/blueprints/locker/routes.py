@@ -69,7 +69,8 @@ def process_deliveries():
                 mail_recipients = [delivery.get_sender().email]
                 if delivery.email_recipient:
                     mail_recipients.append(delivery.email_recipient)
-                locker_space = LockerSpace.query.filter_by(delivery_id=delivery_id, locker_id=locker_id).first()
+                locker_space_source = LockerSpace.query.filter_by(delivery_id=delivery_id, locker_id=delivery.get_locker_source().id).first()
+                locker_space_destination = LockerSpace.query.filter_by(delivery_id=delivery_id, locker_id=delivery.get_locker_destination().id).first()
                 delivery_string = ''
                 if isinstance(current_user, UserMixin):
                     for id in delivery_ids:
@@ -86,14 +87,14 @@ def process_deliveries():
                                    render_template('emails/delivery_update_arrived_at_source_locker.html', delivery=delivery))
                         # show message
                         return render_template('process.html', title='Process delivery', current_user=current_user,
-                                               action_string='put', locker_space=locker_space, delivery_string=delivery_string, delivery=delivery, locker_id=locker_id)
+                                               action_string='put', locker_space=locker_space_source, delivery_string=delivery_string, delivery=delivery, locker_id=locker_id)
                     elif delivery.status == 1 and delivery.driver_id == current_user.id:
                         # driver picks up package from source locker
                         # change delivery status
                         delivery.status = 2
                         delivery.date_source_departed = datetime.utcnow()
                         # free locker space
-                        LockerSpace.query.filter_by(locker_id=locker_id, delivery_id=delivery.id).first().delivery_id = None
+                        locker_space_source.free_space()
                         db.session.commit()
                         # send mail
                         send_email(mail_recipients,
@@ -101,7 +102,7 @@ def process_deliveries():
                                    render_template('emails/delivery_update_picked_up_by_driver.html',
                                                    delivery=delivery))
                         return render_template('process.html', title='Process delivery', current_user=current_user,
-                                               action_string='pick up', locker_space=locker_space,
+                                               action_string='pick up', locker_space=locker_space_source,
                                                delivery_string=delivery_string, delivery=delivery, locker_id=locker_id)
                     elif delivery.status == 2 and delivery.driver_id == current_user.id:
                         # driver delivers package to destination locker
@@ -118,7 +119,7 @@ def process_deliveries():
                                    render_template('emails/delivery_update_arrived_at_destination_locker.html',
                                                    delivery=delivery))
                         return render_template('process.html', title='Process delivery', current_user=current_user,
-                                               action_string='put', locker_space=locker_space,
+                                               action_string='put', locker_space=locker_space_destination,
                                                delivery_string=delivery_string, delivery=delivery, locker_id=locker_id)
 
                     elif delivery.status == 3 and current_user.id not in [delivery.sender_id, delivery.driver_id]:
@@ -127,8 +128,7 @@ def process_deliveries():
                         delivery.status = 4
                         delivery.date_destination_picked = datetime.utcnow()
                         # free locker space
-                        LockerSpace.query.filter_by(locker_id=locker_id, delivery_id=delivery.id).first().delivery_id = None
-                        db.session.commit()
+                        locker_space_destination.free_space()
 
                         # send mail
                         send_email(mail_recipients,
@@ -136,7 +136,7 @@ def process_deliveries():
                                    render_template('emails/delivery_update_picked_up_by_recipient.html',
                                                    delivery=delivery))
                         return render_template('process.html', title='Process delivery', current_user=current_user,
-                                               action_string='pick up', locker_space=locker_space,
+                                               action_string='pick up', locker_space=locker_space_destination,
                                                delivery_string=delivery_string, delivery=delivery, locker_id=locker_id)
                     else:
                         # error
@@ -149,15 +149,14 @@ def process_deliveries():
                     delivery.status = 4
                     delivery.date_destination_picked = datetime.utcnow()
                     # free locker space
-                    LockerSpace.query.filter_by(locker_id=locker_id, delivery_id=delivery.id).first().delivery_id = None
-                    db.session.commit()
+                    locker_space_destination.free_space()
                     # send mail
                     send_email(mail_recipients,
                                'Paco - Delivery {} update'.format(delivery.tracking_id),
                                render_template('emails/delivery_update_picked_up_by_recipient.html',
                                                delivery=delivery))
                     return render_template('process.html', title='Process delivery', current_user=current_user,
-                                           action_string='pick up', locker_space=locker_space,
+                                           action_string='pick up', locker_space=locker_space_destination,
                                            delivery_string=delivery_string, delivery=delivery, locker_id=locker_id)
 
             else:

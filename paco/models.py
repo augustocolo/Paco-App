@@ -343,3 +343,5 @@ class LockerSpace(db.Model):
     delivery_id = db.Column(db.Integer, db.ForeignKey('delivery.id'))
     dimension = db.Column(db.Integer, nullable=False)
 
+    def free_space(self):
+        self.delivery_id = None
