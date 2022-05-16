@@ -43,13 +43,17 @@
                     <li class="nav-item">
                         <div class="dropdown">
                             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="{{ url_for('static', filename='images/default_user_image.svg') }}" alt="" class="rounded-circle">
+                                {% if current_user.is_authenticated %}
+                                    <img src="{{ url_for('static', filename='profile_pics/{}'.format(current_user.image_file)) }}" alt="" class="rounded-circle" width="48" height="48">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='profile_pics/default_user_image.jpg') }}" alt="" class="rounded-circle" width="48" height="48">
+                                {% endif %}
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                 {% if current_user.is_authenticated %}
                                     <li><div class="dropdown-item-text">Hello <b>{{ current_user.username }}</b></div></li>
                                     <li><a class="dropdown-item" href="{{ url_for('show_dashboard') }}">Dashboard</a>  </li>
-                                    <li><a class="dropdown-item" href="#">Your account</a>  </li>
+                                    <li><a class="dropdown-item" href="{{ url_for('user.settings') }}">Your account</a>  </li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
                                 {% else %}

@@ -5,7 +5,7 @@ from paco import models
 db.create_all()
 
 # LOCKERS
-file = open('data/CarrefourLocations.csv')
+file = open('data/CarrefourLocations.csv', encoding="latin-1")
 csvreader = csv.reader(file)
 
 header = next(csvreader)

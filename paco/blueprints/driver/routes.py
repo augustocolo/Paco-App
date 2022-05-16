@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, url_for, render_template
+from flask import Blueprint, flash, redirect, url_for, render_template, request
 from flask_googlemaps import Map
 from flask_login import login_required, current_user
 
@@ -6,7 +6,7 @@ from paco import db, gmaps
 from paco.api import license_plates
 from paco.api.optimization import solve_session_knapsack
 from paco.blueprints.driver.forms import CarInfoAddForm, CarInfoConfirmForm, DriverSignupForm, SessionStartForm, \
-    SessionConfirmForm
+    SessionConfirmForm, DriverUpdateForm
 from paco.models import DriverInfo, CarInfo, Locker, Delivery, DriverSession, DriverSessionDelivery
 from paco.utils import email_required, driver_required, flash_form_errors, human_readable_time
 
@@ -50,6 +50,46 @@ def create():
 
     return render_template("signup_driver.html", title="Become a driver", form=form)
 
+@driver.route('/update', methods=["POST"])
+@login_required
+@email_required
+@driver_required
+def update():
+    form = DriverUpdateForm()
+    driver = current_user.get_driver_info()
+    if form.validate_on_submit():
+        if driver.name != form.name.data:
+            driver.name = form.name.data
+        if driver.surname != form.surname.data:
+            driver.surname = form.surname.data
+        if driver.gender != bool(form.gender.data):
+            driver.gender = bool(form.gender.data)
+        if driver.date_of_birth != form.date_of_birth.data:
+            driver.date_of_birth = form.date_of_birth.data
+        if driver.country_of_birth != form.country_of_birth.data:
+            driver.country_of_birth = form.country_of_birth.data
+        if driver.fiscal_code != form.fiscal_code.data:
+            driver.fiscal_code = form.fiscal_code.data
+        if driver.phone_number != form.phone_number.data:
+            driver.phone_number = form.phone_number.data
+        if driver.address_street != form.address_street.data:
+            driver.address_street = form.address_street.data
+        if driver.address_town != form.address_town.data:
+            driver.address_town = form.address_town.data
+        if driver.address_zip_code != form.address_zip_code.data:
+            driver.address_zip_code = form.address_zip_code.data
+        if driver.address_country != form.address_country.data:
+            driver.address_country = form.address_country.data
+        if driver.license_number != form.license_code.data:
+            driver.license_number = form.license_code.data
+        if driver.license_expiration != form.license_expiration.data:
+            driver.license_expiration = form.license_expiration.data
+        if driver.license_issuing_authority != form.license_issuing_authority.data:
+            driver.license_issuing_authority = form.license_issuing_authority.data
+        db.session.commit()
+    flash_form_errors(form)
+    return redirect(url_for('user.settings'))
+
 
 @driver.route('/car/add', methods=["GET", "POST"])
 @login_required
@@ -73,6 +113,21 @@ def add_car():
             flash('Please insert a valid license plate', 'danger')
     flash_form_errors(form)
     return render_template('car/add.html', title='Add a car', form=form)
+
+@driver.route('/car/remove', methods=["GET"])
+@login_required
+@email_required
+@driver_required
+def remove_car():
+    license_plate = request.args.get('license_plate')
+    car = CarInfo.query.filter_by(license_plate=license_plate, driver_id=current_user.id).first()
+    if car:
+        db.session.delete(car)
+        db.session.commit()
+        flash('We successfully deleted {} from our database'.format(license_plate), 'success')
+    else:
+        flash('There was an error with your request, please retry.', 'danger')
+    return redirect(url_for('user.settings'))
 
 
 @driver.route('/car/confirm', methods=["POST"])

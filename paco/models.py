@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    image_file = db.Column(db.String(20), nullable=False, default='default_user_image.jpg')
     password = db.Column(db.String(60), nullable=False)
     is_driver = db.Column(db.Boolean, nullable=False, default=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -99,6 +99,11 @@ class User(db.Model, UserMixin):
                     return session
         return None
 
+    def get_driver_info(self):
+        if self.is_driver:
+            return DriverInfo.query.filter_by(id=self.id).first()
+        return None
+
 
 
 class Locker(db.Model):
@@ -158,6 +163,8 @@ class Locker(db.Model):
     def reserve_space(self, delivery):
         locker_space = LockerSpace.query.filter_by(locker_id=self.id, dimension=delivery.dimension, delivery_id=None).first()
         locker_space.delivery_id = delivery.id
+
+
 
 
 

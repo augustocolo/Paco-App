@@ -772,3 +772,4 @@ break;case error.POSITION_UNAVAILABLE:alert("Location information is unavailable
 break;case error.TIMEOUT:alert("The request to get user location timed out. Please insert your starting location manually.")
 break;case error.UNKNOWN_ERROR:alert("An unknown error occurred. Please insert your starting location manually.")
 break;}}
+function fillFormLanding(fromTown,toTown){document.getElementById("send_from").value=fromTown;document.getElementById("send_to").value=toTown;location.href="#";}

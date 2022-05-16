@@ -1,5 +1,5 @@
-
 _price_per_m = 0.0075
+
 
 def get_price(distance, box_size, weight, fragile=False):
     box_size_mult_dict = {
