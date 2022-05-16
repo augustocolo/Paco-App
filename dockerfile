@@ -24,6 +24,8 @@ WORKDIR paco/static/assets
 
 RUN npm install
 
+WORKDIR /app
+
 
 CMD python -m flask run -h 0.0.0.0 -p 80
 
