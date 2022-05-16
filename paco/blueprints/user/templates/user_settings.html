@@ -57,118 +57,120 @@
                         </form>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="nav-driver-info" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <div class="col-12 col-lg-6 col-md-8  mx-auto">
-                        <h5>Personal information</h5>
-                        <form class="p-1 p-md-1 form-floating" method="POST" action="{{ url_for('driver.update') }}">
-                            {{  driver_info_form.hidden_tag() }}
-                            <div class="form-floating">
-                                {{ driver_info_form.name(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Name", autocomplete="given-name") }}
-                                {{ driver_info_form.name.label(class="px-4") }}
-                            </div>
-                            <div class="form-floating">
-                                {{ driver_info_form.surname(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Surname", autocomplete="family-name") }}
-                                {{ driver_info_form.surname.label(class="px-4") }}
-                            </div>
-                            <div class="form-floating">
-                                {{ driver_info_form.gender(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Gender", autocomplete="sex") }}
-                                {{ driver_info_form.gender.label(class="px-4") }}
+                {% if current_user.is_driver %}
+                    <div class="tab-pane fade" id="nav-driver-info" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div class="col-12 col-lg-6 col-md-8  mx-auto">
+                            <h5>Personal information</h5>
+                            <form class="p-1 p-md-1 form-floating" method="POST" action="{{ url_for('driver.update') }}">
+                                {{  driver_info_form.hidden_tag() }}
+                                <div class="form-floating">
+                                    {{ driver_info_form.name(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Name", autocomplete="given-name") }}
+                                    {{ driver_info_form.name.label(class="px-4") }}
+                                </div>
+                                <div class="form-floating">
+                                    {{ driver_info_form.surname(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Surname", autocomplete="family-name") }}
+                                    {{ driver_info_form.surname.label(class="px-4") }}
+                                </div>
+                                <div class="form-floating">
+                                    {{ driver_info_form.gender(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Gender", autocomplete="sex") }}
+                                    {{ driver_info_form.gender.label(class="px-4") }}
 
-                            </div>
-                            <div class="form-floating">
-                                {{ driver_info_form.date_of_birth(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Date of birth", autocomplete="bday") }}
-                                {{ driver_info_form.date_of_birth.label(class="px-4") }}
-                            </div>
-                            <div class="form-floating">
-                                {{ driver_info_form.town_of_birth(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Town of birth") }}
-                                {{ driver_info_form.town_of_birth.label(class="px-4") }}
-                            </div>
-                            <div class="form-floating">
-                                {{ driver_info_form.country_of_birth(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Country of birth") }}
-                                {{ driver_info_form.country_of_birth.label(class="px-4") }}
-                            </div>
-                            <div class="form-floating">
-                                {{ driver_info_form.fiscal_code(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Fiscal code") }}
-                                {{ driver_info_form.fiscal_code.label(class="px-4") }}
-                            </div>
-                            <div class="form-floating">
-                                {{ driver_info_form.phone_number(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Phone number") }}
-                                {{ driver_info_form.phone_number.label(class="px-4") }}
-                            </div>
-                            <h5>Your address</h5>
-                            <div class="form-floating">
-                                {{ driver_info_form.address_street(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Street", autocomplete="street-address") }}
-                                {{ driver_info_form.address_street.label(class="px-4") }}
-                            </div>
-                            <div class="form-floating">
-                                {{ driver_info_form.address_town(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Town") }}
-                                {{ driver_info_form.address_town.label(class="px-4") }}
-                            </div>
-                            <div class="form-floating">
-                                {{ driver_info_form.address_zip_code(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Zip code") }}
-                                {{ driver_info_form.address_zip_code.label(class="px-4") }}
-                            </div>
-                            <div class="form-floating">
-                                {{ driver_info_form.address_country(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Country") }}
-                                {{ driver_info_form.address_country.label(class="px-4") }}
-                            </div>
-                            <h5>Your driving license</h5>
-                            <div class="form-floating">
-                                {{ driver_info_form.license_code(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Number") }}
-                                {{ driver_info_form.license_code.label(class="px-4") }}
-                            </div>
-                            <div class="form-floating">
-                                {{ driver_info_form.license_expiration(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Expiration date") }}
-                                {{ driver_info_form.license_expiration.label(class="px-4") }}
-                            </div>
-                            <div class="form-floating">
-                                {{ driver_info_form.license_issuing_authority(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Issuing authority") }}
-                                {{ driver_info_form.license_issuing_authority.label(class="px-4") }}
-                            </div>
+                                </div>
+                                <div class="form-floating">
+                                    {{ driver_info_form.date_of_birth(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Date of birth", autocomplete="bday") }}
+                                    {{ driver_info_form.date_of_birth.label(class="px-4") }}
+                                </div>
+                                <div class="form-floating">
+                                    {{ driver_info_form.town_of_birth(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Town of birth") }}
+                                    {{ driver_info_form.town_of_birth.label(class="px-4") }}
+                                </div>
+                                <div class="form-floating">
+                                    {{ driver_info_form.country_of_birth(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Country of birth") }}
+                                    {{ driver_info_form.country_of_birth.label(class="px-4") }}
+                                </div>
+                                <div class="form-floating">
+                                    {{ driver_info_form.fiscal_code(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Fiscal code") }}
+                                    {{ driver_info_form.fiscal_code.label(class="px-4") }}
+                                </div>
+                                <div class="form-floating">
+                                    {{ driver_info_form.phone_number(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Phone number") }}
+                                    {{ driver_info_form.phone_number.label(class="px-4") }}
+                                </div>
+                                <h5>Your address</h5>
+                                <div class="form-floating">
+                                    {{ driver_info_form.address_street(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Street", autocomplete="street-address") }}
+                                    {{ driver_info_form.address_street.label(class="px-4") }}
+                                </div>
+                                <div class="form-floating">
+                                    {{ driver_info_form.address_town(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Town") }}
+                                    {{ driver_info_form.address_town.label(class="px-4") }}
+                                </div>
+                                <div class="form-floating">
+                                    {{ driver_info_form.address_zip_code(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Zip code") }}
+                                    {{ driver_info_form.address_zip_code.label(class="px-4") }}
+                                </div>
+                                <div class="form-floating">
+                                    {{ driver_info_form.address_country(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Country") }}
+                                    {{ driver_info_form.address_country.label(class="px-4") }}
+                                </div>
+                                <h5>Your driving license</h5>
+                                <div class="form-floating">
+                                    {{ driver_info_form.license_code(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Number") }}
+                                    {{ driver_info_form.license_code.label(class="px-4") }}
+                                </div>
+                                <div class="form-floating">
+                                    {{ driver_info_form.license_expiration(class="form-select form-control-lg mb-3 rounded-pill px-4", placeholder="Expiration date") }}
+                                    {{ driver_info_form.license_expiration.label(class="px-4") }}
+                                </div>
+                                <div class="form-floating">
+                                    {{ driver_info_form.license_issuing_authority(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Issuing authority") }}
+                                    {{ driver_info_form.license_issuing_authority.label(class="px-4") }}
+                                </div>
 
-                            {{ driver_info_form.submit(class="w-100 btn btn-lg btn-primary rounded-pill") }}
-                        </form>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="nav-cars" role="tabpanel" aria-labelledby="nav-contact-tab">
-                    <div class="col-12 col-lg-8  mx-auto">
-                        <div class="table-responsive mb-3">
-                            <table class="table align-middle">
-                                <thead>
-                                <tr>
-                                    <th scope="col">License plate</th>
-                                    <th scope="col">Manufacturer</th>
-                                    <th scope="col">Model</th>
-                                    <th scope="col">Fuel type</th>
-                                    <th scope="col">Year</th>
-                                    <th scope="col">Power</th>
-                                </tr>
-                                </thead>
-                                {% for license_plate in current_user.get_license_plates() %}
-                                    <tr>
-                                        <th scope="row">{{ license_plate.license_plate }}</th>
-                                        <td>{{ license_plate.car_make }}</td>
-                                        <td>{{ license_plate.car_model }}</td>
-                                        <td>{{ license_plate.fuel_type }}</td>
-                                        <td>{{ license_plate.registration_year }}</td>
-                                        <td>{{ license_plate.power_cv }} CV</td>
-                                        <td>
-                                            <a href="{{ url_for('driver.remove_car', license_plate=license_plate.license_plate) }}" role="button" class="btn btn-danger rounded-pill">
-                                                <i class="bi bi-x-circle mr-1"></i>
-                                                Remove
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </table>
-
+                                {{ driver_info_form.submit(class="w-100 btn btn-lg btn-primary rounded-pill") }}
+                            </form>
                         </div>
-                        <a href="{{ url_for('driver.add_car') }}" role="button" class="btn btn-success rounded-pill w-100">
-                            <i class="bi bi-plus-lg"></i>
-                            Add car
-                        </a>
                     </div>
-                </div>
+                    <div class="tab-pane fade" id="nav-cars" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <div class="col-12 col-lg-8  mx-auto">
+                            <div class="table-responsive mb-3">
+                                <table class="table align-middle">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">License plate</th>
+                                        <th scope="col">Manufacturer</th>
+                                        <th scope="col">Model</th>
+                                        <th scope="col">Fuel type</th>
+                                        <th scope="col">Year</th>
+                                        <th scope="col">Power</th>
+                                    </tr>
+                                    </thead>
+                                    {% for license_plate in current_user.get_license_plates() %}
+                                        <tr>
+                                            <th scope="row">{{ license_plate.license_plate }}</th>
+                                            <td>{{ license_plate.car_make }}</td>
+                                            <td>{{ license_plate.car_model }}</td>
+                                            <td>{{ license_plate.fuel_type }}</td>
+                                            <td>{{ license_plate.registration_year }}</td>
+                                            <td>{{ license_plate.power_cv }} CV</td>
+                                            <td>
+                                                <a href="{{ url_for('driver.remove_car', license_plate=license_plate.license_plate) }}" role="button" class="btn btn-danger rounded-pill">
+                                                    <i class="bi bi-x-circle mr-1"></i>
+                                                    Remove
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+
+                            </div>
+                            <a href="{{ url_for('driver.add_car') }}" role="button" class="btn btn-success rounded-pill w-100">
+                                <i class="bi bi-plus-lg"></i>
+                                Add car
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
