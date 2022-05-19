@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from markupsafe import Markup
-from wtforms import StringField, IntegerField, SelectField, SubmitField, EmailField
+from wtforms import StringField, IntegerField, SelectField, SubmitField, EmailField, BooleanField
 from wtforms.validators import DataRequired, NumberRange, ValidationError
 from wtforms.widgets import HiddenInput, html_params
 
@@ -42,6 +42,7 @@ class SendParcelFormIntro(FlaskForm):
         for locker in lockers:
             if locker.has_space_free(self.box_size.data):
                 valid = True
+                break
         if not valid:
             raise ValidationError(
                 'There are no available lockers in {}. Please try again at another time.'.format(self.send_from.data)
@@ -61,6 +62,7 @@ class SendParcelFormIntro(FlaskForm):
         for locker in lockers:
             if locker.has_space_free(self.box_size.data):
                 valid = True
+                break
         if not valid:
             raise ValidationError(
                 'There are no available lockers in {}. Please try again at another time.'.format(self.send_to.data))
@@ -77,6 +79,7 @@ class SendParcelFormLockerChoice(FlaskForm):
     sender_id = IntegerField(widget=HiddenInput(), validators=[DataRequired()])
     weight = IntegerField(widget=HiddenInput(), validators=[DataRequired()])
     dimension = IntegerField(widget=HiddenInput(), validators=[DataRequired()])
+    fragile = BooleanField('Is this parcel fragile?')
     locker_source_id = SelectField('Locker', widget=ButtonCheckInput(), validators=[DataRequired()])
     locker_destination_id = SelectField('Locker', widget=ButtonCheckInput(), validators=[DataRequired()])
     submit = SubmitField('Confirm choice')
@@ -90,5 +93,6 @@ class SendParcelFormConfirmation(FlaskForm):
     locker_destination_id = IntegerField('Locker', widget=HiddenInput(), validators=[DataRequired()])
     price = IntegerField(widget=HiddenInput(), validators=[DataRequired()])
     distance = IntegerField(widget=HiddenInput(), validators=[DataRequired()])
+    fragile = BooleanField(widget=HiddenInput())
     email_recipient = EmailField('Recipient email')
     submit = SubmitField('Confirm delivery and pay')

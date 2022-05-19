@@ -16,7 +16,7 @@ auth = Blueprint('auth', __name__, template_folder='templates', url_prefix='/aut
 @auth.route('/login', methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('show_dashboard'))
+        return redirect(url_for('user.dashboard'))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -24,7 +24,10 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember_me.data)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('show_dashboard'))
+            return redirect(next_page) if next_page else redirect(url_for('user.dashboard'))
+        else:
+            flash('Email and password don\'t match. Please try again', 'danger')
+    flash_form_errors(form)
     return render_template("login.html", form=form, title='Login')
 
 
@@ -72,7 +75,7 @@ def verify_email():
                                    confirm_url=url_for('auth.confirm_email', token=token, _external=True)))
         return render_template("verify_email.html", title="Verify Email")
     else:
-        return redirect(url_for('show_dashboard'))
+        return redirect(url_for('user.dashboard'))
 
 
 @auth.route('/verify_email/<token>', methods=["GET"])

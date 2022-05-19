@@ -63,16 +63,16 @@ var isEqualJson = (obj1,obj2)=>{
         outputMessage.hidden = true;
         outputData.parentElement.hidden = false;
         //outputData.innerText = code.data;
-        var code_decoded = {};
-        try {
-          code_decoded = JSON.parse(code.data);
-          if (code_decoded.app != "paco_demo"){
-            throw Error;
-          }
-          window.location.replace("./login.html");
-        } catch (err) {
-          if (err instanceof SyntaxError) {
-            alert("Questo QR non funziona con Crop");
+        var code_decoded = {}
+        if (typeof code.data == 'string' | code.data instanceof String){
+          const url = String(code.data)
+          const regex = "(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
+          found = url.match(regex)
+          if (found){
+            location.replace(found[0])
+          } else {
+            alert("Questo QR non funziona con Paco");
+            location.reload()
           }
         }
       } else {

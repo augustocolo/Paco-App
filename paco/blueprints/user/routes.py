@@ -5,6 +5,7 @@ from paco import db
 from paco.blueprints.driver.forms import DriverUpdateForm
 from paco.blueprints.user.forms import UserUpdateForm
 from paco.utils import email_required, flash_form_errors, save_picture
+from paco.models import Delivery
 
 user = Blueprint('user', __name__, template_folder='templates', url_prefix='/user')
 
@@ -61,3 +62,23 @@ def update():
 
     flash_form_errors(form)
     return redirect(url_for('user.settings'))
+
+@user.route('/dashboard', methods=["GET"])
+@login_required
+@email_required
+def dashboard():
+    deliveries_sent = current_user.get_deliveries_sent()
+    total_spent = current_user.get_spent_last_month()
+    deliveries_sent_count = current_user.get_deliveries_sent_count_last_month()
+
+    deliveries_delivered = current_user.get_deliveries_delivered()
+    total_earned = current_user.get_earned_last_month()
+    deliveries_delivered_count = current_user.get_deliveries_delivered_count_last_month()
+
+    return render_template("dashboard.html", title="Dashboard",
+                           current_user=current_user, deliveries_sent=deliveries_sent,
+                           total_spent_last_month=Delivery.format_price(total_spent),
+                           deliveries_sent_count_last_month=deliveries_sent_count,
+                           deliveries_delivered=deliveries_delivered,
+                           total_earned_last_month=Delivery.format_price(total_earned),
+                           deliveries_delivered_count_last_month=deliveries_delivered_count)

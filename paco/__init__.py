@@ -62,15 +62,16 @@ assets.register("scss_all", scss)  # 4. register the generated css file, to be u
 
 from paco.api import mail
 
-from paco import routes
 from paco.blueprints.auth.routes import auth
 from paco.blueprints.delivery.routes import delivery
 from paco.blueprints.driver.routes import driver
 from paco.blueprints.locker.routes import locker
 from paco.blueprints.user.routes import user
+from paco.blueprints.main.routes import main
 
 app.register_blueprint(auth)
 app.register_blueprint(delivery)
 app.register_blueprint(driver)
 app.register_blueprint(locker)
 app.register_blueprint(user)
+app.register_blueprint(main)

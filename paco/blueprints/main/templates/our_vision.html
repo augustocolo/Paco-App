@@ -1,0 +1,44 @@
+{% extends "base/base_landing.html" %}
+
+{% block content %}
+    <body>
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+
+    <div class="container col-xxl-8 px-4 py-5 mt-4">
+        <!--Hero-->
+        <div class="col align-items-center g-5 py-5">
+            <div class="row">
+                <img src="{{ url_for('static', filename='images/corporate_memphis/undraw_environment_iaus.svg') }}" class="d-block mx-auto img-fluid w-50" alt="Deliveries" loading="lazy">
+            </div>
+            <div class="col text-center">
+                <h1 class="display-5 fw-bold lh-1 mb-3">Our sustainable vision</h1>
+                <p class="lead">It's because <b>we care</b></p>
+                <a href="{{ url_for('auth.signup') }}" class="btn btn-success btn-lg text-white rounded-pill w-100">Sign up now</a>
+            </div>
+        </div>
+
+        <!-- Paragraph -->
+        <div class="col g-md-4 g-2 pt-3">
+            <p>
+                Sustainable commitment for Paco is the top priority. Through our business we seek to have an impact on all three dimensions of sustainability: environmental dimension, social dimension, and economic dimension.
+            </p>
+            <p>
+                The main focus is on environmental sustainability. Reducing CO2 emissions by optimizing vehicles on the roads and encouraging the use of electric cars is a strategic goal for Paco.
+            </p>
+            <p>
+                By placing ourselves within the energy transition program promoted by the European Union, we pursue the vision of greening the entire parcel transport sector. We are aware of the magnitude of this challenge but with our commitment and optimism we want to incentivize other companies to follow us on this path as well.
+            </p>
+            <p>
+                From the perspective of the social dimension of sustainability, one issue that is particularly close to our hearts is the rising annual death rate from traffic accidents.
+                We believe that by decreasing traffic we can also reduce the likelihood and number of traffic accidents, increasing the safety of travelers.
+            </p>
+            <p>
+                Last but not least, Paco wants to make parcel transportation more convenient for its customers while maintaining high quality standards. As a company, we aim to pursue sustainable economic growth and at the same time we want to make money for affiliated drivers so that they can recover travel expenses.
+            </p>
+        </div>
+    </div>
+    </body>
+{% endblock %}

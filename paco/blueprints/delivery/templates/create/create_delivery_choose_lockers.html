@@ -61,6 +61,12 @@
                 {{ form.locker_destination_id(class="btn-group-vertical w-100 mb-3") }}
 
                 {{ form.hidden_tag() }}
+                <div class="row mb-3 px-3">
+                    <div class="form-check form-switch">
+                        {{ form.fragile.label(class="form-check-label") }}
+                        {{ form.fragile(class="form-check-input") }}
+                    </div>
+                </div>
                 {{ form.submit(class="w-100 btn btn-lg btn-success rounded-pill") }}
             </form>
         </div>

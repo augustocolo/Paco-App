@@ -1,8 +1,6 @@
 import string
 import random
 
-from sqlalchemy import select
-
 from paco import db, login_manager
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -105,7 +103,6 @@ class User(db.Model, UserMixin):
         return None
 
 
-
 class Locker(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
@@ -153,29 +150,28 @@ class Locker(db.Model):
         return res
 
     def has_space_free(self, dimension):
-        locker_spaces_available = LockerSpace.query.filter_by(locker_id=self.id, dimension=dimension, delivery_id=None).all()
+        locker_spaces_available = LockerSpace.query.filter_by(locker_id=self.id, dimension=dimension,
+                                                              delivery_id=None).all()
         return True if locker_spaces_available else False
 
     def get_available_space(self, dimension):
-        locker_space_available = LockerSpace.query.filter_by(locker_id=self.id, dimension=dimension, delivery_id=None).first()
+        locker_space_available = LockerSpace.query.filter_by(locker_id=self.id, dimension=dimension,
+                                                             delivery_id=None).first()
         return locker_space_available
 
     def reserve_space(self, delivery):
-        locker_space = LockerSpace.query.filter_by(locker_id=self.id, dimension=delivery.dimension, delivery_id=None).first()
+        locker_space = LockerSpace.query.filter_by(locker_id=self.id, dimension=delivery.dimension,
+                                                   delivery_id=None).first()
         locker_space.delivery_id = delivery.id
-
-
-
 
 
 class Delivery(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    driver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    driver_id = db.Column(db.Integer, db.ForeignKey('driver_info.id'))
     status = db.Column(db.Integer, nullable=False, default=0)
     email_recipient = db.Column(db.String(120))
     tracking_id = db.Column(db.String(8), unique=True, nullable=False)
-
 
     # Dates
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -187,6 +183,7 @@ class Delivery(db.Model):
     # Lockers
     locker_source_id = db.Column(db.Integer, db.ForeignKey('locker.id'), nullable=False)
     locker_destination_id = db.Column(db.Integer, db.ForeignKey('locker.id'), nullable=False)
+
     # Package information
     weight = db.Column(db.Integer, nullable=False)
     dimension = db.Column(db.Integer, nullable=False)  # 1 -> small 2 -> medium 3 -> large
@@ -270,12 +267,11 @@ class Delivery(db.Model):
         return ran
 
 
-
 class DriverInfo(db.Model):
     id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    # PERSONAL INFO
+    # Personal Info
     name = db.Column(db.String(60), nullable=False)
     surname = db.Column(db.String(60), nullable=False)
     gender = db.Column(db.Boolean, nullable=False)  # 0->male 1->female
@@ -285,13 +281,13 @@ class DriverInfo(db.Model):
     fiscal_code = db.Column(db.String(16), nullable=False)
     phone_number = db.Column(db.String(20), nullable=False)
 
-    # ADDRESS
+    # Address
     address_street = db.Column(db.String(60), nullable=False)
     address_town = db.Column(db.String(60), nullable=False)
     address_zip_code = db.Column(db.String(60), nullable=False)
     address_country = db.Column(db.String(60), nullable=False)
 
-    # DRIVERS LICENSE
+    # Drivers License
     license_number = db.Column(db.String(60), nullable=False)
     license_expiration = db.Column(db.Date, nullable=False)
     license_issuing_authority = db.Column(db.String(60), nullable=False)
@@ -308,9 +304,9 @@ class CarInfo(db.Model):
 
     def get_price_percentage(self):
         price_percentage = 0.5
-        if self.fuel_type in ['Electric']:
+        if self.fuel_type in ['Electric', 'Elettrica']:
             price_percentage = 0.7
-        elif self.fuel_type in ['Ibrida']:
+        elif self.fuel_type in ['Hybrid', 'Ibrida']:
             price_percentage = 0.6
 
         return price_percentage
@@ -330,10 +326,12 @@ class DriverSession(db.Model):
             (DriverSessionDelivery.session_id == self.id)).scalar()
 
     def get_deliveries(self):
-        return [session_delivery.get_delivery() for session_delivery in DriverSessionDelivery.query.filter(DriverSessionDelivery.session_id == self.id).all()]
+        return [session_delivery.get_delivery() for session_delivery in
+                DriverSessionDelivery.query.filter(DriverSessionDelivery.session_id == self.id).all()]
 
     def is_active(self):
         return self.date_ended is None
+
 
 class DriverSessionDelivery(db.Model):
     session_id = db.Column(db.Integer, db.ForeignKey('driver_session.id'), primary_key=True, nullable=False)

@@ -52,14 +52,14 @@
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                 {% if current_user.is_authenticated %}
                                     <li><div class="dropdown-item-text">Hello <b>{{ current_user.username }}</b></div></li>
-                                    <li><a class="dropdown-item" href="{{ url_for('show_dashboard') }}">Dashboard</a>  </li>
+                                    <li><a class="dropdown-item" href="{{ url_for('user.dashboard') }}">Dashboard</a>  </li>
                                     <li><a class="dropdown-item" href="{{ url_for('user.settings') }}">Your account</a>  </li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
                                 {% else %}
-                                    <li><a class="dropdown-item" href="/login">Login</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">Login</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('auth.signup') }}">Sign Up</a></li>
                                 {% endif %}
 
                             </ul>

@@ -53,7 +53,7 @@ def process_qr_locker(token):
             return redirect(url_for('locker.locker_pickup', locker_id=locker_id))
 
     flash('Please scan again the locker QR code.', 'danger')
-    return redirect(url_for('scan_qr'))
+    return redirect(url_for('main.scan_qr'))
 
 
 @locker.route('/process')
@@ -141,7 +141,7 @@ def process_deliveries():
                     else:
                         # error
                         flash('There was an error while processing your request', 'danger')
-                        return redirect(url_for('scan_qr'))
+                        return redirect(url_for('main.scan_qr'))
 
                 elif delivery.status == 3:
                     # recipient (not an user) picks up package from destination locker
@@ -161,13 +161,13 @@ def process_deliveries():
 
             else:
                 flash('There was an error while processing your request, please try again', 'danger')
-                return redirect(url_for('scan_qr'))
+                return redirect(url_for('main.scan_qr'))
 
         # redirect to pickup
         return redirect(url_for('locker.locker_pickup', locker_id=locker_id))
 
     flash('There was an error while processing your request, please try again', 'danger')
-    return redirect(url_for('scan_qr'))
+    return redirect(url_for('main.scan_qr'))
 
 
 @locker.route('/pickup', methods=['GET', 'POST'])

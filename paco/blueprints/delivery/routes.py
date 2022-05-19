@@ -123,7 +123,7 @@ def create_locker_choice():
         distance = directions[0]['legs'][0]['distance']['value']
 
 
-        price = get_price(distance, int(form.dimension.data), int(form.weight.data))
+        price = get_price(distance, int(form.dimension.data), int(form.weight.data), fragile=bool(form.fragile.data))
         form2 = SendParcelFormConfirmation(
             sender_id=form.sender_id.data,
             locker_source_id=form.locker_source_id.data,
@@ -131,7 +131,8 @@ def create_locker_choice():
             weight=form.weight.data,
             dimension=form.dimension.data,
             distance=distance,
-            price=price
+            price=price,
+            fragile=form.fragile.data
         )
 
         return render_template("create/create_delivery_confirm.html",
@@ -167,7 +168,8 @@ def confirm():
             distance=form.distance.data,
             price=form.price.data,
             email_recipient=email_recipient,
-            tracking_id=Delivery.generate_tracking_id()
+            tracking_id=Delivery.generate_tracking_id(),
+            fragile=form.fragile.data
         )
         db.session.add(delivery)
         db.session.commit()
@@ -185,7 +187,7 @@ def confirm():
                    'Paco - Delivery {} created'.format(delivery.tracking_id),
                    render_template('emails/delivery_update_created.html', delivery=delivery))
 
-        return redirect(url_for('show_dashboard'))
+        return redirect(url_for('user.dashboard'))
     else:
         flash("There was an error while processing your request. Try again!", "danger")
         return redirect(url_for('delivery.create'))

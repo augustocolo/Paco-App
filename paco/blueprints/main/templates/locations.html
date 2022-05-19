@@ -1,0 +1,21 @@
+{% extends "base/base_landing.html" %}
+
+{% block content %}
+    <body>
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+
+    <div class="container col-xxl-8 pt-4 py-5 mt-4">
+        <!--Hero-->
+        <div class="col g-5 pt-5">
+            <div class="row">
+                <h1 class="display-5 fw-bold lh-1 mb-3">Our locations</h1>
+            </div>
+            <div class="">{{ map.html }}</div>
+            {{ map.js }}
+        </div>
+    </div>
+    </body>
+{% endblock %}

@@ -1,3 +1,7 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+
 <p>There is an update about your delivery from <b>{{ delivery.get_locker_source().name }}</b> to <b>{{ delivery.get_locker_destination().name }}</b>:</p>
 {% block message %}
 {% endblock %}
@@ -6,3 +10,5 @@
 
 <p>Thank you for choosing us,<br>
     Paco</p>
+
+{% endblock %}

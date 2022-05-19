@@ -19,7 +19,7 @@ driver = Blueprint('driver', __name__, template_folder='templates', url_prefix='
 def create():
     if current_user.is_driver:
         flash('You are already a driver', 'danger')
-        return redirect(url_for('show_dashboard'))
+        return redirect(url_for('user.dashboard'))
     form = DriverSignupForm()
     if form.validate_on_submit():
         driver = DriverInfo(
@@ -50,7 +50,7 @@ def create():
 
     return render_template("signup_driver.html", title="Become a driver", form=form)
 
-@driver.route('/update', methods=["POST"])
+@driver.route('/update', methods=["GET", "POST"])
 @login_required
 @email_required
 @driver_required
@@ -149,20 +149,20 @@ def confirm_car():
         db.session.add(car)
         db.session.commit()
         flash('You succesfully added {} to your cars'.format(form.license_plate.data), 'success')
-        return redirect(url_for('show_dashboard'))
+        return redirect(url_for('user.dashboard'))
 
     flash_form_errors(form)
     return redirect(url_for('driver.add_car'))
 
 
-@driver.route('/session/start', methods=["GET", "POST"])
+@driver.route('/session/create', methods=["GET", "POST"])
 @login_required
 @email_required
 @driver_required
 def start_session():
     if current_user.is_in_driving_session():
         flash('You cannot start a new driving session! Please complete the one you\'ve started', 'danger')
-        return redirect(url_for('show_dashboard'))
+        return redirect(url_for('user.dashboard'))
     form = SessionStartForm()
     license_plates = current_user.get_license_plates()
     form.license_plate.choices = [
@@ -182,7 +182,7 @@ def start_session():
 
         if not lockers_near_source:
             flash('There are no deliveries available near your starting point.', 'danger')
-            return redirect(url_for('show_dashboard'))
+            return redirect(url_for('user.dashboard'))
 
         # Get end point
         to_address_geocoded = gmaps.geocode(form.to_location.data)
@@ -196,7 +196,7 @@ def start_session():
 
         if not lockers_near_destination:
             flash('There are no deliveries available near your arrival.', 'danger')
-            return redirect(url_for('show_dashboard'))
+            return redirect(url_for('user.dashboard'))
 
         # Get deliveries in route
 
@@ -210,7 +210,7 @@ def start_session():
 
         if not route_deliveries:
             flash('There are no deliveries available at the moment.', 'danger')
-            return redirect(url_for('show_dashboard'))
+            return redirect(url_for('user.dashboard'))
 
         # Get set of deliveries, maximize for price, bound is max capacity
         max_price = 0
@@ -326,7 +326,7 @@ def start_session():
                                    )
         else:
             flash('There are no deliveries available for you at the moment.', 'danger')
-            return redirect(url_for('show_dashboard'))
+            return redirect(url_for('user.dashboard'))
 
     flash_form_errors(form)
     return render_template('session/start.html', current_user=current_user, title="Start driving session", form=form)
@@ -424,7 +424,7 @@ def next_step_session():
                                    session=session, deliveries=deliveries, map=map)
         else:
             flash('This session is not valid.', 'danger')
-            return redirect(url_for('show_dashboard'))
+            return redirect(url_for('user.dashboard'))
 
     else:
         flash('It looks like you don\'t have an active session, please start one.', 'danger')
