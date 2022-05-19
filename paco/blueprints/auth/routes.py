@@ -5,9 +5,9 @@ from paco import bcrypt, db
 from paco.api.email import send_email
 from flask_login import login_user, current_user, logout_user, login_required
 
-from paco.blueprints.auth.forms import LoginForm, UserRegistrationForm
+from paco.blueprints.auth.forms import LoginForm, UserRegistrationForm, RequestResetPasswordForm, PasswordResetForm
 from paco.models import User
-from paco.tokens import generate_confirmation_token, confirm_token
+from paco.tokens import generate_confirmation_token, confirm_token, generate_reset_token, verify_reset_token
 from paco.utils import flash_form_errors
 
 auth = Blueprint('auth', __name__, template_folder='templates', url_prefix='/auth')
@@ -60,7 +60,7 @@ def signup():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('main.index'))
 
 
 @auth.route('/verify_email', methods=["GET", "POST"])
@@ -95,3 +95,38 @@ def confirm_email(token):
         db.session.commit()
         flash('You successfully verified your account! Please log in.', 'success')
     return redirect(url_for('auth.login'))
+
+@auth.route('/reset_password', methods=["GET", "POST"])
+def request_reset_password():
+    if current_user.is_authenticated:
+        return redirect(url_for('user.dashboard'))
+
+    form = RequestResetPasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        print(user)
+        if user:
+            token = generate_reset_token(user)
+            send_email([user.email],
+                       'Please reset your password',
+                       render_template('emails/reset_password_email.html',
+                                       reset_url=url_for('auth.reset_password', token=token, _external=True)))
+        return render_template('next_reset_password.html', current_user=current_user, title='Reset password', email=form.email.data)
+    return render_template("request_reset_password.html", form=form, title='Reset password')
+
+@auth.route('/reset_password/<token>', methods=["GET", "POST"])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('user.dashboard'))
+    user = verify_reset_token(token)
+    if user is None:
+        flash('That is an invalid or expired token', 'warning')
+        return redirect(url_for('main.request_reset_password'))
+    form = PasswordResetForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password = hashed_password
+        db.session.commit()
+        flash('Your password has been updated! You are now able to log in', 'success')
+        return redirect(url_for('auth.login'))
+    return render_template('reset_token.html', title='Reset Password', form=form)

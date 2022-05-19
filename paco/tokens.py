@@ -1,6 +1,7 @@
 from itsdangerous import URLSafeTimedSerializer
 
 from paco import app
+from paco.models import User
 
 
 def generate_confirmation_token(email):
@@ -38,3 +39,21 @@ def confirm_qr(token, expiration=65):
     except:
         return False
     return res
+
+
+def generate_reset_token(user):
+    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    return serializer.dumps({'user_id': user.id}, salt=app.config['SECURITY_PASSWORD_SALT'])
+
+
+def verify_reset_token(token, expiration=1800):
+    s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    try:
+        user_id = s.loads(
+            token,
+            salt=app.config['SECURITY_PASSWORD_SALT'],
+            max_age=expiration
+        )['user_id']
+    except:
+        return None
+    return User.query.filter_by(id=user_id)

@@ -121,6 +121,7 @@ class Locker(db.Model):
     def get_google_maps_directions(self):
         return 'https://maps.google.com?saddr=Current+Location&daddr={},{}'.format(self.latitude, self.longitude)
 
+    @staticmethod
     def get_lockers_near_source(latitude, longitude):
         res = []
         source_lockers = [item[0] for item in
@@ -135,6 +136,7 @@ class Locker(db.Model):
                 res.append(locker)
         return res
 
+    @staticmethod
     def get_lockers_near_destination(latitude, longitude):
         res = []
         destination_lockers = [item[0] for item in db.session.query(Delivery.locker_destination_id).filter(
@@ -193,6 +195,7 @@ class Delivery(db.Model):
     distance = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
 
+    @staticmethod
     def dimension_from_int_to_text(dimension):
         dimension_coding = {
             1: "small (max 40cm x 20 cm x 20cm)",
@@ -203,9 +206,9 @@ class Delivery(db.Model):
 
     def get_dimension_from_int_to_text(self):
         dimension_coding = {
-            1: "small (max 40cm x 20 cm x 20cm)",
+            1: "small (max 40cm x 20cm x 20cm)",
             2: "medium (max 40cm x 40cm x 40cm)",
-            3: "large (max 80cm x 40 cm x 40cm)"
+            3: "large (max 80cm x 40cm x 40cm)"
         }
         return dimension_coding[self.dimension]
 
@@ -219,6 +222,7 @@ class Delivery(db.Model):
             price_string = price_string + "0"
         return "{},{}€".format(price_string[:-2], price_string[-2:])
 
+    @staticmethod
     def format_price(price):
         price_string = str(price)
         while len(price_string) < 3:
@@ -260,6 +264,7 @@ class Delivery(db.Model):
     def get_driver(self):
         return User.query.filter_by(id=self.driver_id).first()
 
+    @staticmethod
     def generate_tracking_id():
         ran = 'PACOFIRS'
         while Delivery.query.filter_by(tracking_id=ran).first():
