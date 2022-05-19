@@ -21,7 +21,7 @@ def show_locker_qr(id):
     qr_info = '{}locker/qr/{}'.format(request.host_url, token)
 
     return render_template("locker_qr.html",
-                           title="Locker {}".format(locker.name), locker=locker, qr_info=qr_info)
+                           title="Locker {}".format(locker.name), locker=locker, qr_info=qr_info, debug=app.debug)
 
 
 @locker.route('/qr/<string:token>', methods=["GET"])
