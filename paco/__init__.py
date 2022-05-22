@@ -54,11 +54,11 @@ assets.register("js_all", js)
 
 # Bundle Scss files
 scss = Bundle(
-    "assets/main.scss",  # 1. will read this scss file and generate a css file based on it
-    filters="libsass",  # 2. using this filter: https://webassets.readthedocs.io/en/latest/builtin_filters.html#libsass
-    output="css/scss-generated.css"  # 3. and output the generated .css file in the static/css folder
+    "assets/main.scss",
+    filters="libsass",
+    output="css/scss-generated.css"
 )
-assets.register("scss_all", scss)  # 4. register the generated css file, to be used in Jinja templates (see base.html)
+assets.register("scss_all", scss)
 
 from paco.api import mail
 

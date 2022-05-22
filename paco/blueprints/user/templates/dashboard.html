@@ -73,11 +73,42 @@
                             <td>{{ delivery.get_locker_destination().name }}</td>
                             <td>{{ delivery.format_status() }}</td>
                             <td>{{ delivery.get_formatted_price() }}</td>
-                            <td><a href="{{ url_for('delivery.track', tracking_id=delivery.tracking_id) }}" role="button" class="btn btn-success rounded-pill">Tracking</a></td>
+                            <td><a href="{{ url_for('delivery.track', tracking_id=delivery.tracking_id) }}" role="button" class="btn btn-success text-white rounded-pill">Tracking</a></td>
                         </tr>
                     {% endfor %}
                 </table>
             </div>
+            {% if current_user.is_driver %}
+                <h4 class="fw-bold lh-1 mb-3">Recent driving sessions:</h4>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">From</th>
+                            <th scope="col">To</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Earned</th>
+                        </tr>
+                        </thead>
+                        {% for session in driver_sessions %}
+                            <tr>
+                                <td>{{ session.date_created.strftime("%d/%m/%Y") }}</td>
+                                <td>{{ session.start_address }}</td>
+                                <td>{{ session.end_address }}</td>
+                                <td>
+                                    {% if session.is_active() %}
+                                        Active
+                                    {% else %}
+                                        Done
+                                    {% endif %}
+                                </td>
+                                <td>{{ session.get_formatted_total_earned() }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

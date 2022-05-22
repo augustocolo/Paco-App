@@ -11,7 +11,6 @@ def get_car_info(license_plate):
         'RegistrationNumber': license_plate,
         'username': os.environ.get('TARGA_USERNAME')
     })
-    print(req.status_code)
     if req.status_code == 200:
         string = req.text
         response = fromstring(string.encode('utf-8'))

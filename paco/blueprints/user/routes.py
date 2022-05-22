@@ -71,7 +71,9 @@ def dashboard():
     total_spent = current_user.get_spent_last_month()
     deliveries_sent_count = current_user.get_deliveries_sent_count_last_month()
 
-    deliveries_delivered = current_user.get_deliveries_delivered()
+    driver_sessions = current_user.get_driver_info()
+    if driver_sessions:
+        driver_sessions = driver_sessions.get_sessions()
     total_earned = current_user.get_earned_last_month()
     deliveries_delivered_count = current_user.get_deliveries_delivered_count_last_month()
 
@@ -79,6 +81,6 @@ def dashboard():
                            current_user=current_user, deliveries_sent=deliveries_sent,
                            total_spent_last_month=Delivery.format_price(total_spent),
                            deliveries_sent_count_last_month=deliveries_sent_count,
-                           deliveries_delivered=deliveries_delivered,
                            total_earned_last_month=Delivery.format_price(total_earned),
-                           deliveries_delivered_count_last_month=deliveries_delivered_count)
+                           deliveries_delivered_count_last_month=deliveries_delivered_count,
+                           driver_sessions=driver_sessions)

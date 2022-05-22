@@ -30,6 +30,35 @@
                             </i>
                             Drive</a>
                     </li>
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item mt-4 mb-2 my-md-auto me-1 ">
+                            <a class="nav-link btn btn-success text-white rounded-pill px-3" href="{{ url_for('delivery.create') }}">
+                                <i class="bi bi-plus-lg me-1"></i>Send Parcel</a>
+                        </li>
+                        {% if current_user.is_driver %}
+                            {% if current_user.is_in_driving_session() %}
+                                <li class="nav-item my-2 my-md-auto me-1">
+                                    <a class="nav-link btn btn-warning fw-bold rounded-pill px-3" href="{{ url_for('driver.next_step_session') }}">
+                                        <i class="bi bi-exclamation-circle"></i>
+                                        Active session
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item my-2 my-md-auto me-1">
+                                    <a class="nav-link btn btn-dark text-white rounded-pill px-3" href="{{ url_for('driver.start_session') }}">
+                                        <i class="bi bi-arrow-bar-right"></i>
+                                        Start Driving Session
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <li class="nav-item my-2 my-md-auto me-1">
+                                <a class="nav-link btn btn-dark text-white rounded-pill px-3" href="{{ url_for('driver.create') }}">
+                                    Become a driver
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
                     <li class="nav-item">
                         <div class="dropdown">
                             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

@@ -1,4 +1,4 @@
-_price_per_m = 0.0075
+_price_per_m = 0.0056
 
 
 def get_price(distance, box_size, weight, fragile=False):

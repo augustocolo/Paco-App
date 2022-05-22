@@ -32,10 +32,10 @@ class User(db.Model, UserMixin):
         return self.email_confirmed
 
     def get_deliveries_sent(self):
-        return Delivery.query.filter_by(sender_id=self.id).all()
+        return Delivery.query.filter_by(sender_id=self.id).order_by(Delivery.date_created.desc()).all()
 
     def get_deliveries_delivered(self):
-        return Delivery.query.filter_by(sender_id=self.id).all()
+        return Delivery.query.filter_by(sender_id=self.id).order_by(Delivery.date_created.desc()).all()
 
     def get_spent_last_month(self):
         date = datetime.utcnow() + relativedelta(months=-1)
@@ -52,7 +52,8 @@ class User(db.Model, UserMixin):
             ).all()
             amount = 0
             for session in sessions:
-                amount += session.get_total_earned()
+                if not session.is_active():
+                    amount += session.get_total_earned()
             return amount
         else:
             return 0
@@ -297,6 +298,10 @@ class DriverInfo(db.Model):
     license_expiration = db.Column(db.Date, nullable=False)
     license_issuing_authority = db.Column(db.String(60), nullable=False)
 
+    def get_sessions(self):
+        return DriverSession.query.filter_by(driver_id=self.id).order_by(DriverSession.date_created.desc()).all()
+
+
 
 class CarInfo(db.Model):
     license_plate = db.Column(db.String(7), primary_key=True, nullable=False)
@@ -308,11 +313,11 @@ class CarInfo(db.Model):
     power_cv = db.Column(db.Integer)
 
     def get_price_percentage(self):
-        price_percentage = 0.5
+        price_percentage = 0.7
         if self.fuel_type in ['Electric', 'Elettrica']:
-            price_percentage = 0.7
+            price_percentage = 0.9
         elif self.fuel_type in ['Hybrid', 'Ibrida']:
-            price_percentage = 0.6
+            price_percentage = 0.8
 
         return price_percentage
 
@@ -329,6 +334,10 @@ class DriverSession(db.Model):
     def get_total_earned(self):
         return db.session.query(functions.sum(DriverSessionDelivery.earned_amount)).filter(
             (DriverSessionDelivery.session_id == self.id)).scalar()
+
+    def get_formatted_total_earned(self):
+        total_earned = self.get_total_earned()
+        return Delivery.format_price(total_earned)
 
     def get_deliveries(self):
         return [session_delivery.get_delivery() for session_delivery in
