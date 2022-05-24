@@ -235,7 +235,7 @@ class Delivery(db.Model):
             0: 'Confirmed',
             1: 'Waiting for driver',
             2: 'En route',
-            3: 'Collect package at destinaton locker',
+            3: 'Collect package at destination locker',
             4: 'Completed'
         }
         return format_status_dict[self.status]

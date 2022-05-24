@@ -18,11 +18,11 @@ delivery = Blueprint('delivery', __name__, template_folder='templates', url_pref
 def create():
     form = SendParcelFormIntro()
     if form.validate_on_submit():
-        # prendi locker in città
+        # Get lockers in selected towns
         send_from_lockers_all = Locker.query.filter_by(town=form.send_from.data).all()
         send_to_lockers_all = Locker.query.filter_by(town=form.send_to.data).all()
 
-        # filtra lockers con spazio disponibile
+        # Filter lockers with available spaces
         send_from_lockers = []
         for locker in send_from_lockers_all:
             if locker.has_space_free(form.box_size.data):

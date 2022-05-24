@@ -20,6 +20,13 @@
             <div class="row mb-3">
                 <div class="col-12">
                     <h5 class="text-center">Please {{ action_string }} the parcel in space</h5>
+
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <h6 class="text-center">{{ delivery.get_locker_source().name }} <i class="bi bi-arrow-right"></i> {{ delivery.get_locker_destination().name }}</h6>
+                    <h6 class="text-center">{{ delivery.get_dimension_from_int_to_text() }}</h6>
                 </div>
             </div>
             <div class="row mb-4">

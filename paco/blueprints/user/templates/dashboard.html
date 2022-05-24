@@ -85,6 +85,7 @@
                         <thead>
                         <tr>
                             <th scope="col">Date</th>
+                            <th scope="col">Car</th>
                             <th scope="col">From</th>
                             <th scope="col">To</th>
                             <th scope="col">Status</th>
@@ -94,6 +95,7 @@
                         {% for session in driver_sessions %}
                             <tr>
                                 <td>{{ session.date_created.strftime("%d/%m/%Y") }}</td>
+                                <td>{{ session.license_plate }}</td>
                                 <td>{{ session.start_address }}</td>
                                 <td>{{ session.end_address }}</td>
                                 <td>
