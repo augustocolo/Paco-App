@@ -1,13 +1,7 @@
 import csv
-import os
-
-from loadenv import load_env
-
-load_env()
 
 from paco import db
 from paco import models
-
 
 
 db.create_all()

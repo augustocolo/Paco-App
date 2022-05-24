@@ -8,9 +8,6 @@ from flask_login import LoginManager
 from flask_googlemaps import GoogleMaps
 from flask_qrcode import QRcode
 import googlemaps
-from loadenv import load_env
-
-load_env()
 
 app = Flask(__name__)
 

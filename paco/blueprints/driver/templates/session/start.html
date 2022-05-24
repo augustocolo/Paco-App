@@ -32,11 +32,13 @@
                     {{ form.to_location(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="You're going to arrive to...") }}
                     {{ form.to_location.label(class="px-4") }}
                 </div>
-                <div class="form-floating">
-                    {{ form.liters_available(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Space available") }}
-                    {{ form.liters_available.label(class="px-4") }}
+                <div class="row mb-3">
+                    <div class="input-group form-floating">
+                        {{ form.liters_available(class="form-control form-control-lg rounded-pill px-5", placeholder="Space available", style="border-top-right-radius:0px!important; border-bottom-right-radius:0px!important;") }}
+                        <span class="input-group-text rounded-pill px-3" id="basic-addon2" style="border-top-left-radius:0px!important; border-bottom-left-radius:0px!important;">L</span>
+                        {{ form.liters_available.label(class="px-5") }}
+                    </div>
                 </div>
-
                 {{ form.submit(class="w-100 btn btn-lg btn-primary rounded-pill") }}
 
             </form>

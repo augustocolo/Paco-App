@@ -7,7 +7,7 @@
                 <h5>Welcome to:</h5>
                 <h1 class="display-1 fw-normal">{{ locker.name }}</h1>
                 <h5>{{ locker.address }}</h5>
-                <h5>{{ locker.town }}, {{ locker.zip_code }}, {{ locker.country }}</h5>
+                <h5>{{ locker.town }}, {{ locker.zip_code }} ({{ locker.province }})</h5>
                 <br>
                 <h6 class="text-muted">Scan the QR code to continue</h6>
                 {% if debug %}
