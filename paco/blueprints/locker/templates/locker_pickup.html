@@ -28,12 +28,13 @@
                     {{ form.tracking_id(class="form-control form-control-lg mb-3 rounded-pill px-4", placeholder="Tracking number") }}
                     {{ form.tracking_id.label(class="px-4") }}
                 </div>
-            </form>
-            <div class="row mb-3 d-flex justify-content-center align-content-center">
+                <div class="row mb-3 d-flex justify-content-center align-content-center">
                 <div class="col-10 col-md-6">
-                    <a class="btn btn-success text-white rounded-pill px-3 btn-lg w-100">Pick up parcel <i class="bi bi-arrow-right ml-1"></i></a>
+                    {{ form.submit(class="btn btn-success text-white rounded-pill px-3 btn-lg w-100") }}
                 </div>
             </div>
+            </form>
+
         </div>
     </div>
 {% endblock %}

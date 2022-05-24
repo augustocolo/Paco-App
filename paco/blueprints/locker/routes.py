@@ -129,7 +129,7 @@ def process_deliveries():
                         delivery.date_destination_picked = datetime.utcnow()
                         # free locker space
                         locker_space_destination.free_space()
-
+                        db.session.commit()
                         # send mail
                         send_email(mail_recipients,
                                    'Paco - Delivery {} update'.format(delivery.tracking_id),
@@ -150,6 +150,7 @@ def process_deliveries():
                     delivery.date_destination_picked = datetime.utcnow()
                     # free locker space
                     locker_space_destination.free_space()
+                    db.session.commit()
                     # send mail
                     send_email(mail_recipients,
                                'Paco - Delivery {} update'.format(delivery.tracking_id),

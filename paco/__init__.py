@@ -8,13 +8,16 @@ from flask_login import LoginManager
 from flask_googlemaps import GoogleMaps
 from flask_qrcode import QRcode
 import googlemaps
+from loadenv import load_env
+
+load_env()
 
 app = Flask(__name__)
 
 # Configure database
-app.config['SECRET_KEY'] = 'Cambiarelasecretkeynonappenapubblico'
-app.config['SECURITY_PASSWORD_SALT'] = 'Cambiarelasaltkeynonappenapubblico'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///paco.db'
+app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY')
+app.config['SECURITY_PASSWORD_SALT'] = os.environ.get('FLASK_SALT_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
 db = SQLAlchemy(app)
 
 # Authentication stuff

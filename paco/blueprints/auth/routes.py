@@ -34,7 +34,7 @@ def login():
 @auth.route('/signup', methods=["GET", "POST"])
 def signup():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     form = UserRegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
