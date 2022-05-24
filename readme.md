@@ -33,7 +33,7 @@ The software requires the following environment variables:
 * SQLALCHEMY_DATABASE_URI: the URI of the SqlAlchemy Database
 * TARGA_USERNAME: a [https://www.regcheck.org.uk/](https://www.regcheck.org.uk/) valid username
 
-If you provde a .env file, then the application automatically loads the environment variables into the project
+If you provide a .env file, then the application automatically loads the environment variables into the project
 
 ## Run the server
 
