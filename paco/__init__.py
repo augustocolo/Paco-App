@@ -17,7 +17,7 @@ app = Flask(__name__)
 # Configure database
 app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.environ.get('FLASK_SALT_KEY')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///paco.db'
 db = SQLAlchemy(app)
 
 # Authentication stuff
