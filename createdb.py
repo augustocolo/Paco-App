@@ -13,7 +13,7 @@ from paco import models
 db.create_all()
 
 # LOCKERS
-file = open('data/CarrefourLocations.csv', encoding="latin-1")
+file = open('data/CarrefourLocations.csv', encoding="utf-8")
 csvreader = csv.reader(file)
 
 header = next(csvreader)
