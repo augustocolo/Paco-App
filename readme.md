@@ -1,6 +1,10 @@
 ![Paco](/paco/static/images/brand_identity/logo_whole.png "Paco logo")
 
-Paco is an website written in Flask to manage a peer to peer delivery service.
+Paco is a website written in Flask to manage a peer to peer delivery service.
+
+It is a university group project for the exam Information Systems at Politecnico di Torino.
+
+The website was developed by Augusto Colongo, with the aid of Gian Nicolò Bernini, Pietro Brondello, Andrea Facta, Lorenzo Garbo, Filippo Gattiglia.
 
 It is written in Python 3.7. For the whole library requirement list refer to _requirements.txt_
 
